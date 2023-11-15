@@ -10,6 +10,7 @@ include_once '../dao/user.php';
 include_once '../dao/binh-luan.php';
 include_once '../dao/phan-hoi-binh-luan.php';
 include_once '../dao/pdo.php';
+include_once '../dao/cart.php';
 ?>
 
 <?
@@ -46,14 +47,15 @@ if (isset($_GET["page"])) {
                 header('Location: index.php?page=login');
                 exit();
             }
-            if (!isset($_SESSION['mycart'])) $_SESSION['mycart'] = [];
+            if (!isset($_SESSION['mycart']))
+                $_SESSION['mycart'] = [];
             if (isset($_POST['addcart']) && ($_POST['addcart'])) {
                 $mahh = $_POST['mahh'];
                 $tenhh = $_POST['tenhh'];
                 $dongia = $_POST['dongia'];
                 $hinh = $_POST['hinh'];
                 $soluong = $_POST['soluong'];
-
+                $giam_gia = $_POST['giamgia'];
                 $fl = 0;
                 for ($i = 0; $i < sizeof($_SESSION['mycart']); $i++) {
                     if ($_SESSION['mycart'][$i][1] == $tenhh) {
@@ -65,18 +67,44 @@ if (isset($_GET["page"])) {
                 }
                 if ($fl == 0) {
 
-                    $hanghoa = [$mahh, $tenhh, $dongia, $hinh, $soluong];
-                    $_SESSION['mycart'] [] = $hanghoa;
+                    $hanghoa = [$mahh, $tenhh, $dongia, $hinh, $soluong, $giam_gia];
+                    $_SESSION['mycart'][] = $hanghoa;
                 }
 
             }
             include 'user/cart/cart.php';
             break;
         case 'xoacart':
+            if (isset($_SESSION['mycart'])) {
+                if (isset($_GET['idcart'])) {
+
+                    array_splice($_SESSION['mycart'], $_GET['idcart'], 1);
+
+                } else {
+                    unset($_SESSION['cartmy']);
+                }
+
+                // if(count($_SESSION['cart'])>0) header('location: cart.php')  ;
+                //    else  header('location: productPage.php');
+
+
+            }
             include 'user/cart/cart.php';
 
             break;
         case 'checkout':
+            // function generateMaHD()
+            // {
+            //     return 'HD_' . uniqid();
+            // }
+
+            // Function to sanitize input data
+            // function sanitizeInput($data)
+            // {
+            //     return htmlspecialchars(strip_tags(trim($data)));
+            // }
+ 
+     
             include 'user/cart/checkout.php';
             break;
         case 'orderComplete':

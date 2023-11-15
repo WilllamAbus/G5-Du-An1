@@ -33,8 +33,9 @@
             $ship = 30000;
             $tongthanhtoan = 0;
             $tongsl = 0;
+            $giam_gia = 1;
             foreach ($_SESSION['mycart'] as $cart) {
-                $thanhtien = $cart[2] * $cart[4];
+                $thanhtien = $giam_gia > 0 ? ($cart[2] * $cart[4]) * (100 - $cart[5]) / 100 : $cart[2] * $cart[4];
                 $tong = $tong + $thanhtien;
                 $tongthanhtoan = $ship + $tong;
                 $tongsl += $cart[4];
@@ -51,6 +52,7 @@
                        <li class="list-group-item d-flex justify-content-between lh-condensed">
                             <div>
                                 <h6 class="my-0">Tên sản phẩm ' . $i . ': ' . $cart[1] . '</h6>
+                                <img  src="../controller/hinh/' . $cart[3] . '"alt="" style="width: 78px; height: 126px">
                                 <small class="text-muted">Số lượng: ' . $cart[4] . '</small>
                             </div>
                             <span class="text-muted">' . number_format($cart[2],) . ' VNĐ</span>

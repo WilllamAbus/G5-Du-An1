@@ -66,10 +66,12 @@
         </div>
        
         
+     
         <input type="hidden" name="mahh" value="' . $ma_hh . '">
         <input type="hidden" name="tenhh" value="' . $ten_hh . '">
-        <input type="hidden" name="dongia" value="' . $don_gia . '">
+        <input type="hidden" name="dongia" value="' . $don_gia . '">   
         <input type="hidden" name="hinh" value="' . $hinh . '">
+        <input type="hidden" name="giamgia" value="' . $giam_gia . '">
         <input type="submit" name="addcart"   class="btn btn-warning shadow-0" value="Thêm vào giỏ hàng">
         </form>
     </div>

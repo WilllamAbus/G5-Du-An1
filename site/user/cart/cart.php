@@ -1,18 +1,5 @@
 <?
-if (isset($_SESSION['mycart'])) {
-    if (isset($_GET['idcart'])) {
 
-        array_splice($_SESSION['mycart'], $_GET['idcart'], 1);
-
-    } else {
-        unset($_SESSION['cartmy']);
-    }
-
-    // if(count($_SESSION['cart'])>0) header('location: cart.php')  ;
-    //    else  header('location: productPage.php');
-
-
-}
 ?>
 <div class="container-fluid">
     <div class="row px-xl-5">
@@ -23,6 +10,7 @@ if (isset($_SESSION['mycart'])) {
                     <th>Sản Phẩm</th>
                     <th>Tên Sản Phẩm</th>
                     <th>Giá</th>
+                    <th>Giảm giá</th>
                     <th>Số Lượng</th>
                     <th>Tổng Tiền</th>
                     <th>Xóa</th>
@@ -35,7 +23,8 @@ if (isset($_SESSION['mycart'])) {
                 $ship = 30000;
                 $tongthanhtoan = 0;
                 foreach ($_SESSION['mycart'] as $cart) {
-                    $thanhtien = $cart[2] * $cart[4];
+
+                    $thanhtien = $giam_gia > 0 ? ($cart[2] * $cart[4]) * ($giam_gia = (100 - $cart[5]) / 100) : $cart[2] * $cart[4];
                     $tong = $tong + $thanhtien;
                     $tongthanhtoan = $ship + $tong;
                     echo '
@@ -44,11 +33,12 @@ if (isset($_SESSION['mycart'])) {
                     <td class="align-middle">
                     ' . $cart[1] . '
                 </td>
-                    <td class="align-middle">' . number_format($cart[2],) . ' VNĐ</td>
+                    <td class="align-middle">' . number_format($cart[2]) . ' VNĐ</td>
+                    <td class="align-middle">' . $cart[5] . ' %</td>
                     <td class="align-middle">
                         ' . $cart[4] . '
                     </td>
-                    <td class="align-middle">' . number_format($thanhtien,) . ' VNĐ</td>
+                    <td class="align-middle">' . number_format($thanhtien) . ' VNĐ</td>
                     <td class="align-middle">
                     <a href="index.php?page=xoacart&idcart=' . $i . '">  Xóa
                     </a>
