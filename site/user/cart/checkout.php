@@ -1,24 +1,62 @@
 <?
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $hoten = isset($_POST['hoten']) ? $_POST['hoten'] : '';
-    $email = isset($_POST['email']) ? $_POST['email'] : '';
-    $sdt = isset($_POST['sdt']) ? $_POST['sdt'] : '';
-    $dc = isset($_POST['dc']) ? $_POST['dc'] : '';
-    if (empty($hoten)) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+
+    $ten_nd = $_POST['ten_nd'];
+    // $email = $_POST['email'];
+    $sdt = $_POST['sdt'];
+    $dia_chi = $_POST['dia_chi'];
+
+
+    if (empty($ten_nd)) {
         $errhoten = "Họ Tên Trống";
     }
-    if (empty($email)) {
-        $erremail = "Email Trống";
-    }
+    // if (empty($email)) {
+    //     $erremail = "Email Trống";
+    // }
     if (empty($sdt)) {
         $errsdt = "Số Điện Thoại Trống";
     }
-    if (empty($dc)) {
+    if (empty($dia_chi)) {
         $errdc = "Địa Chỉ Trống";
     }
-    if (!isset($errhoten) && !isset($erremail) && !isset($errsdt) && !isset($errdc)) {
-        header('Location: index.php?page=orderComplete');
+    if (!isset($errhoten) && !isset($errsdt) && !isset($errdc)) {
+        $conn = pdo_get_connection();
+        $conn->beginTransaction();
+        // $sqlInsertHoaDon = "INSERT INTO hoa_don (ten_nd, sdt,  dia_chi,ngay_lay pttt, tong_tien) VALUES (?, ?, ?, ?, ?,?)";
+        // $stmtInsertHoaDon = $conn->prepare($sqlInsertHoaDon);
+        $ma_nd = $_COOKIE['ma_nd'];
+        $ten_nd = $_POST['ten_nd'];
+        $sdt = $_POST['sdt'];
+        $ngay_lap = date_create()->format('Y-m-d H:i:s');
+        $dia_chi = $_POST['dia_chi'];
+        $pttt = $_POST['pttt'];
+        $tong_tien = $_POST['tong_tien'];
+        // $stmtInsertHoaDon->execute([$ten_nd, $sdt,  $dia_chi, $ngay_lap, $pttt, $tong_tien]);
+
+        order_data($ma_nd, $ten_nd, $dia_chi, $sdt, $ngay_lap, $pttt, $tong_tien);
+
+        $ma_hd = $conn->lastInsertId();
+        // $sqlInsertHoaDonChiTiet = "INSERT INTO hoa_don_chi_tiet (ma_hd, ma_hh, don_gia, so_luong, giam_gia, thanh_tien) VALUES (?, ?, ?, ?, ?, ?)";
+        // $stmtInsertHoaDonChiTiet = $conn->prepare($sqlInsertHoaDonChiTiet);
+        $ma_hh = $_POST['ma_hh'];
+        $don_gia = $_POST['don_gia'];
+        $so_luong = $_POST['so_luong'];
+        $giam_gia = $_POST['giam_gia'];
+        $thanh_tien = $_POST['thanh_tien'];
+        $hinh = $_POST['hinh'];
+
+        // $stmtInsertHoaDonChiTiet->execute([$ma_hd, $ma_hh, $don_gia, $so_luong, $giam_gia, $thanh_tien]);
+        order_detail_data($ma_hd, $ma_hh, $don_gia, $so_luong, $giam_gia, $thanh_tien, $hinh);
+
+        $conn->commit();
+
+        echo "<script>alert('Đặt hàng thành công!');</script>";
+        echo "<script>window.location.href = 'index.php?page=orderComplete'</script>";
+        // header('Location: index.php?page=orderComplete');
     }
+
+
 }
 
 ?>
@@ -48,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
 
     <div class="row">
-        <div class="col-md-4 order-md-1 mb-4">
+        <div class="col-md-6 order-md-1 mb-4">
             <h4 class="d-flex justify-content-between align-items-center mb-3">
                 <span class="text-muted">Giỏ hàng của bạn</span>
 
@@ -59,8 +97,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $ship = 30000;
             $tongthanhtoan = 0;
             $tongsl = 0;
+            $giam_gia = 1;
             foreach ($_SESSION['mycart'] as $cart) {
-                $thanhtien = $cart[2] * $cart[4];
+                $thanhtien = $giam_gia > 0 ? ($cart[2] * $cart[4]) * (100 - $cart[5]) / 100 : $cart[2] * $cart[4];
                 $tong = $tong + $thanhtien;
                 $tongthanhtoan = $ship + $tong;
                 $tongsl += $cart[4];
@@ -70,70 +109,53 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
               <li class="list-group-item d-flex justify-content-between lh-condensed">
                 <div>
                   <h6 class="my-0">Sản Phẩm ' . $i . ': ' . $cart[1] . '</h6>
+                  <img  src="../controller/hinh/' . $cart[3] . '"alt="" style="width: 78px; height: 126px">
                   <small class="text-muted">Số lượng:' . $cart[4] . '</small>
                 </div>
                 <span class="text-muted">' . number_format($cart[2],) . ' VNĐ</span>
+                <span class="text-muted">' . $cart[5] . ' %</span>
+                <a href="index.php?page=xoacart&idcart=' . $i . '">  Xóa
+                    </a>
               </li>
               ';
             }
 
             ?>
 
-            <li class="list-group-item d-flex justify-content-between bg-light">
-                <div class="text-success">
-                    <h6 class="my-0">Giảm giá</h6>
-                    <small>Mã giảm giá</small>
-                </div>
-                <span class="text-success">0</span>
-            </li>
+
             <li class="list-group-item d-flex justify-content-between bg-light">
                 <div class="text-success">
                     <h6 class="my-0">Tiền Ship</h6>
 
                 </div>
                 <span class="text-success">
-            <?= number_format($ship,) ?> VNĐ
-          </span>
+                        <?= number_format($ship,) ?> VNĐ
+                    </span>
             </li>
             <li class="list-group-item d-flex justify-content-between">
                 <span>Tổng tiền</span>
                 <strong>
-                    <?= number_format($tongthanhtoan,) ?> VNĐ
+                    <?= number_format($tongthanhtoan) ?> VNĐ
                 </strong>
             </li>
             </ul>
             <h4 class="d-flex justify-content-between align-items-center mb-3">
                 <span class="text-muted">Tổng số lượng sản phẩm</span>
                 <span class="badge badge-secondary badge-pill">
-            <?= $tongsl ?>
-          </span>
+                        <?= $tongsl ?>
+                    </span>
             </h4>
         </div>
-        <div class="col-lg-8 order-md-1">
+        <div class="col-lg-6 order-md-1">
             <h4 class="mb-3">Thông tin</h4>
             <form class="needs-validation" action="" method="post">
-                <div class="row">
-                    <!-- <div class="col-md-6 mb-3">
-                        <label for="firstName">Họ</label>
-                        <input type="text" class="form-control" id="firstName" placeholder="Nhập vào họ" value="" required>
-                        <div class="invalid-feedback">
-                          Vui lòng nhập vào họ
-                        </div>
-                      </div>
-                      <div class="col-md-6 mb-3">
-                        <label for="lastName">Tên</label>
-                        <input type="text" class="form-control" id="lastName" placeholder="Nhập vào tên" value="" required>
-                        <div class="invalid-feedback">
-                        Vui lòng nhập vào tên
-                        </div>
-                      </div> -->
-                </div>
+
 
                 <div class="mb-3">
                     <label for="username">Tên đăng nhập</label>
                     <div class="input-group">
 
-                        <input type="text" name="hoten" class="form-control" id="username"
+                        <input type="text" name="ten_nd" class="form-control" id="username"
                                placeholder="Nhập vào tên đăng nhập">
                     </div>
                     <?
@@ -154,33 +176,57 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     }
                     ?>
                 </div>
-                <div class="mb-3">
-                    <label for="email">Email </label>
-                    <input type="email" name="email" class="form-control" id="email" placeholder="you@example.com">
-                    <?
-                    if (!empty($erremail)) {
-                        echo '<p style="color:red;">' . $erremail . '</p>';
-                    }
-                    ?>
-                </div>
+                <!-- <div class="mb-3">
+                        <label for="email">Email </label>
+                        <input type="email" name="email" class="form-control" id="email" placeholder="you@example.com">
+                        <?
+                // if (!empty($erremail)) {
+                //     echo '<p style="color:red;">' . $erremail . '</p>';
+                // }
+                ?>
+                    </div> -->
 
                 <div class="mb-3">
                     <label for="address">Địa chỉ</label>
-                    <input type="text" name="dc" class="form-control" id="address" placeholder="Nhập vào địa chỉ">
+                    <input type="text" name="dia_chi" class="form-control" id="address"
+                           placeholder="Nhập vào địa chỉ">
                     <?
                     if (!empty($errdc)) {
                         echo '<p style="color:red;">' . $errdc . '</p>';
                     }
                     ?>
                 </div>
+                <div class="mb-3">
+
+                    <input type="hidden" name="tong_tien" class="form-control" value=<?= $tongthanhtoan ?>
+                    >
+
+                </div>
 
 
-                <!-- <hr class="mb-4"> -->
-                <!-- <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="same-address">
-                    <label class="custom-control-label" for="same-address">Tôi cam kết thông tin trên là đúng</label>
-                  </div> -->
+                <hr class="mb-4">
+                <h4 class="mb-3">Phương thức thanh toán</h4>
 
+                <div class="d-block my-3">
+                    <div class="custom-control custom-radio">
+                        <input id="credit" name="pttt" type="radio" class="custom-control-input" value="0">
+                        <label class="custom-control-label" for="credit">Thanh toán bằng tiền mặt</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input id="debit" name="pttt" type="radio" class="custom-control-input" value="1" checked>
+                        <label class="custom-control-label" for="debit">Thanh toán bằng MoMo</label>
+                    </div>
+
+                </div>
+
+
+                <input id="credit" name="ma_hh" type="hidden" class="custom-control-input" value="<?= $cart[0] ?>">
+                <input id="credit" name="don_gia" type="hidden" class="custom-control-input" value="<?= $cart[2] ?>">
+                <input id="credit" name="so_luong" type="hidden" class="custom-control-input" value=<?= $cart[4] ?>>
+                <input id="credit" name="giam_gia" type="hidden" class="custom-control-input" value="<?= $cart[5] ?>">
+                <input id="credit" name="thanh_tien" type="hidden" class="custom-control-input"
+                       value=<?= $tongthanhtoan ?>>
+                <input id="credit" name="hinh" type="hidden" class="custom-control-input" value="<?= $cart[3] ?>">
 
                 <hr class="mb-4">
                 <button type="submit" class="btn btn-primary btn-lg btn-block"
@@ -200,7 +246,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 </style>
 <!-- Bootstrap core JavaScript
-  ================================================== -->
+================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

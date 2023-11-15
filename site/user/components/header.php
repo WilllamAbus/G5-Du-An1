@@ -71,10 +71,10 @@ include_once '../dao/loai.php';
             <form action="index.php?page=sanpham" method="post">
                 <div class="input-group">
                     <input type="text" class="form-control" name="inputProduct" placeholder="Tìm Kiếm Sản Phẩm...">
-                    <div class="input-group-append" style="color:#FBEE2C;">
+                    <div class="input-group-append">
                         <span class="input-group-text bg-transparent text-primary">
-                            <button type="submit" style="border:none; background-color: yellow;"> <i
-                                        class="fa fa-search"></i></button>
+                            <button type="submit" style="border:none; background-color: white;"> <i
+                                        class="fa fa-search" style="color:#FBEE2C;"></i></button>
                         </span>
                     </div>
                 </div>
@@ -95,8 +95,8 @@ include_once '../dao/loai.php';
                     <span class="material-symbols-outlined" style="font-size: 41px; color: #FBEE2C;">
                         shopping_cart
                     </span>
-                    <span class="badge border border-secondary rounded-circle"
-                          style="padding-bottom: 2px; color: black; ">8</span>
+                    <!-- <span class="badge border border-secondary rounded-circle"
+                          style="padding-bottom: 2px; color: black; ">8</span> -->
                 </a>
             </div>
 
