@@ -38,7 +38,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">THỐNG KÊ HÀNG HÓA TỪNG LOẠI</h3>
+                        <h3 class="card-title">THỐNG KÊ DOANH THU HÀNG HÓA</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -46,45 +46,26 @@
                             <table class="table table-bordered table-hover">
                                 <thead class="alert-info">
                                 <tr>
-                                    <th>MÃ LOẠI</th>
-                                    <th>LOẠI HÀNG</th>
-                                    <th>SỐ LƯỢNG</th>
-                                    <th>GIÁ CAO NHẤT</th>
-                                    <th>GIÁ TRUNG BÌNH</th>
-                                    <th>GIÁ THẤP NHẤT</th>
+                                    <th>Mã hàng hóa</th>
+                                    <th>Tên hàng hóa</th>
+                                    <th>Số lượng</th>
+                                    <th>Tổng tiền</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <?php
                                 foreach ($listthongke as $list_statistic) {
                                     extract($list_statistic);
-
-                                    echo '
+                                    ?>
                                             <tr>
-                                            <td>
-                                            ' . $ma_loai . '
-                                            </td>
-                                                <td>
-                                                ' . $ten_loai . '
-                                                </td>
-                                                <td>
-                                                ' . $so_luong . '
-                                                </td>
-                                                <td>
-                                                ' . number_format($gia_min) . 'đ
-                                                </td>
-                                                <td>
-                                                ' . number_format($gia_max) . 'đ
-                                                </td>
-                                                <td>
-                                                ' . number_format($gia_avg) . 'đ
-                                                </td>
+                                                <td><?= $ma_hh ?></td>
+                                                <td><?= $ten_hh ?></td>
+                                                <td><?= $so_luong ?></td>
+                                                <td><?= number_format($thanh_tien) ?></td>
                                             </tr>
-                                            
-                                            
-                                            
-                                            ';
 
+
+                                    <?
                                 }
                                 ?>
                                 </tbody>
@@ -95,7 +76,7 @@
                             <th colspan="6">
 
                                 <a name="" id="" class="btn btn-outline-primary btn-md"
-                                   href="index.php?page=staticsChart" role="button">Xem thống kê</a>
+                                   href="index.php?page=staticsChart" role="button">Xem biểu đồ</a>
                             </th>
                         </tr>
 
@@ -121,14 +102,14 @@
                                 <option value="'2021-2-1' AND ngay_lap < '2021-2-30'">Tháng 2</option>
                                 <option value="'2021-1-1' AND ngay_lap < '2021-1-30'">Tháng 1</option>
                             </select><br><br>
-                            <input type="submit" class="btn btn-primary" name="btn_submit" value="Xem thống kê">
+                            <input type="submit" class="btn btn-primary" name="btn_submit" value="Xem thống kê theo tháng">
                         </form>
                         <?php
                 // if (isset($view)) {
                 //     include_once $view;
                 // }
                 ?>
-                    </div> -->
+                    </div>  -->
 
                 <!-- /.card -->
             </div>
