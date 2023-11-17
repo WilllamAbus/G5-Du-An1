@@ -38,14 +38,12 @@
                 $thanhtien = $giam_gia > 0 ? ($cart[2] * $cart[4]) * (100 - $cart[5]) / 100 : $cart[2] * $cart[4];
                 $tong = $tong + $thanhtien;
                 $tongthanhtoan = $ship + $tong;
-                $tongsl += $cart[4];
+
                 $i += 1;
                 echo ' 
                         <h4 class="d-flex justify-content-between align-items-center mb-3">
-                        <span class="text-muted">SẢN PHẨM CỦA BẠN</span>
-                        <span class="badge badge-secondary badge-pill">Tổng số lượng sản phẩm
-                             ' . $tongsl . '
-                        </span>
+                      
+                     
                     </h4>
     
                     <ul class="list-group mb-3">
