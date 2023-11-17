@@ -60,6 +60,10 @@ function order_data($ma_nd, $ten_nd, $dia_chi, $sdt, $ngay_lap, $pttt, $tong_tie
     $statement->bindParam(":ngay_lap", $ngay_lap);
     $statement->bindParam(":tong_tien", $tong_tien);
     $statement->execute();
+
+
+    // Call the function to insert data into hoa_don_chi_tiet using $ma_hd
+  
 }
 
 function order_detail_data($ma_hd, $ma_hh, $don_gia, $so_luong, $giam_gia, $thanh_tien, $hinh)
@@ -86,4 +90,12 @@ function update_order_customer($ma_hd, $ten_kh, $dia_chi, $sdt)
     pdo_execute($sql, $ten_kh, $dia_chi, $sdt);
 }
 
+
+function ma_hdLoad()
+{
+    $sql = "SELECT hd.ma_hd from hoa_don hd where hd.ma_hd >0";
+    $stament = pdo_query($sql);
+    return $stament;
+}
 ?>
+

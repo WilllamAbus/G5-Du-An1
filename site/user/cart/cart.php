@@ -22,9 +22,10 @@
                 $i = 0;
                 $ship = 30000;
                 $tongthanhtoan = 0;
+                $giam_gia = 1;
                 foreach ($_SESSION['mycart'] as $cart) {
 
-                    $thanhtien = $giam_gia > 0 ? ($cart[2] * $cart[4]) * ($giam_gia = (100 - $cart[5]) / 100) : $cart[2] * $cart[4];
+                    $thanhtien = $giam_gia > 0 ? ($cart[2] * $cart[4]) * (100 - $cart[5]) / 100 : $cart[2] * $cart[4];
                     $tong = $tong + $thanhtien;
                     $tongthanhtoan = $ship + $tong;
                     echo '

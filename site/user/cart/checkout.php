@@ -36,9 +36,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         order_data($ma_nd, $ten_nd, $dia_chi, $sdt, $ngay_lap, $pttt, $tong_tien);
 
-        $ma_hd = $conn->lastInsertId();
+        // $ma_hd = $conn->lastInsertId();
+
+        // Call the function to insert data into hoa_don_chi_tiet using $ma_hd
+       
         // $sqlInsertHoaDonChiTiet = "INSERT INTO hoa_don_chi_tiet (ma_hd, ma_hh, don_gia, so_luong, giam_gia, thanh_tien) VALUES (?, ?, ?, ?, ?, ?)";
         // $stmtInsertHoaDonChiTiet = $conn->prepare($sqlInsertHoaDonChiTiet);
+        $ma_hd = $_POST['ma_hd'];
         $ma_hh = $_POST['ma_hh'];
         $don_gia = $_POST['don_gia'];
         $so_luong = $_POST['so_luong'];
@@ -46,11 +50,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $thanh_tien = $_POST['thanh_tien'];
         $hinh = $_POST['hinh'];
 
+
         // $stmtInsertHoaDonChiTiet->execute([$ma_hd, $ma_hh, $don_gia, $so_luong, $giam_gia, $thanh_tien]);
+        // order_detail_data($ma_hd, $ma_hh, $don_gia, $so_luong, $giam_gia, $thanh_tien, $hinh);
+
+        // $conn->commit();
+        // $ma_hd = $conn->lastInsertId(PDO::FETCH_ASSOC);
         order_detail_data($ma_hd, $ma_hh, $don_gia, $so_luong, $giam_gia, $thanh_tien, $hinh);
-
-        $conn->commit();
-
+     
         echo "<script>alert('Đặt hàng thành công!');</script>";
         echo "<script>window.location.href = 'index.php?page=orderComplete'</script>";
         // header('Location: index.php?page=orderComplete');
@@ -148,6 +155,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
         <div class="col-lg-6 order-md-1">
             <h4 class="mb-3">Thông tin</h4>
+
             <form class="needs-validation" action="" method="post">
 
 
@@ -218,8 +226,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
 
                 </div>
+                <?php
+                // $conn = pdo_get_connection();
+                $stament = ma_hdLoad();
+                // var_dump($stament);
+                foreach ($stament as $stam) {
+                    extract($stam);
 
 
+                    ?>
+
+
+                    <?php
+
+                };
+
+                ?>
+                <input id="credit" name="ma_hd" type="hidden" class="custom-control-input"
+                       value=" <?= $stam['ma_hd'] ?>">
                 <input id="credit" name="ma_hh" type="hidden" class="custom-control-input" value="<?= $cart[0] ?>">
                 <input id="credit" name="don_gia" type="hidden" class="custom-control-input" value="<?= $cart[2] ?>">
                 <input id="credit" name="so_luong" type="hidden" class="custom-control-input" value=<?= $cart[4] ?>>
