@@ -584,7 +584,7 @@ include_once "../dao/phan-hoi-binh-luan.php  ";
                             include_once "../dao/thong-ke.php";
                             //   //   // $list_statistics_month =thong_ke_doanh_thu_thang();
                             //   //   // // dd($list_statistics_month);
-                            $listthongke = thong_ke_hang_hoa();
+                            $listthongke = thong_ke_doanh_thu_by_hang_hoa();
 
                             include "thongKe/list.php";
                             break;
@@ -594,8 +594,10 @@ include_once "../dao/phan-hoi-binh-luan.php  ";
                             //   //   // $list_statistics_products = thong_ke_hang_hoa();
                             //   //   // $list_statistics_month =thong_ke_doanh_thu_thang();
                             //   //   // // dd($list_statistics_month);
-                            $listthongke = thong_ke_hang_hoa();
+                            $listthongke = thong_ke_doanh_thu_by_hang_hoa();
                             include "thongKe/staticChart.php";
+
+
                             break;
 
                         //   // //*********************************THỐNG KÊ*************************************** */

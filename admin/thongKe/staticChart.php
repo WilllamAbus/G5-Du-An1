@@ -42,39 +42,92 @@
                 <head>
                     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
                     <script type="text/javascript">
-                        google.charts.load('current', {'packages': ['corechart']});
-                        google.charts.setOnLoadCallback(drawChart);
+                        google.charts.load('current', {'packages': ['corechart', 'bar']});
+                        google.charts.setOnLoadCallback(drawStuff);
 
-                        function drawChart() {
+                        function drawStuff() {
+
+                            var button = document.getElementById('change-chart');
+                            var chartDiv = document.getElementById('chart_div');
 
                             var data = google.visualization.arrayToDataTable([
-                                ['Loại_hàng', 'Số lượng sản phẩm'],
+                                ['Tên hàng hóa', 'Số lượng', 'Thành tiền'],
                                 <?php
                                 $tong = count($listthongke);
                                 $i = 1;
                                 foreach ($listthongke as $list_statistic) {
                                     extract($list_statistic);
                                     if ($i = $tong) $dauPhay = ",";
-                                    echo "['" . $list_statistic['ten_loai'] . "'," . $list_statistic['so_luong'] . "]" . $dauPhay;
+                                    echo "['" . $list_statistic['ten_hh'] . "'," . $list_statistic['so_luong'] . ", " . $list_statistic['thanh_tien'] . "]" . $dauPhay;
                                     $i += 1;
                                 }
 
                                 ?>
+
+                                // ['Canis Major Dwarf', 8000, 23.3],
+                                // ['Sagittarius Dwarf', 24000, 4.5],
+                                // ['Ursa Major II Dwarf', 30000, 14.3],
+                                // ['Lg. Magellanic Cloud', 50000, 0.9],
+                                // ['Bootes I', 60000, 13.1]
+
+
                             ]);
 
-                            var options = {
-                                title: 'BIỂU ĐỒ THỐNG KÊ'
+                            var materialOptions = {
+                                width: 1200,
+                                chart: {
+                                    title: 'DOANH THU HÀNG HÓA',
+
+                                },
+                                series: {
+                                    0: {axis: 'distance'}, // Bind series 0 to an axis named 'distance'.
+                                    1: {axis: 'brightness'} // Bind series 1 to an axis named 'brightness'.
+                                },
+                                axes: {
+                                    y: {
+                                        distance: {}, // Left y-axis.
+                                        brightness: {side: 'right',} // Right y-axis.
+                                    }
+                                }
                             };
 
-                            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+                            var classicOptions = {
+                                width: 1200,
+                                series: {
+                                    // 0: { targetAxisIndex: 0 },
+                                    // 1: { targetAxisIndex: 1 }
+                                },
+                                title: 'DOANH THU HÀNG HÓA',
+                                vAxes: {
+                                    // Adds titles to each axis.
+                                    // 0: { title: 'parsecs' },
+                                    // 1: { title: 'apparent magnitude' }
+                                }
+                            };
 
-                            chart.draw(data, options);
-                        }
+                            function drawMaterialChart() {
+                                var materialChart = new google.charts.Bar(chartDiv);
+                                materialChart.draw(data, google.charts.Bar.convertOptions(materialOptions));
+                                button.innerText = 'Change to Classic';
+                                button.onclick = drawClassicChart;
+                            }
+
+                            function drawClassicChart() {
+                                var classicChart = new google.visualization.ColumnChart(chartDiv);
+                                classicChart.draw(data, classicOptions);
+                                button.innerText = 'Change to Material';
+                                button.onclick = drawMaterialChart;
+                            }
+
+                            drawMaterialChart();
+                        };
                     </script>
                 </head>
 
                 <body>
-                <div id="piechart" style="width: 1220px; height: 600px;"></div>
+                <!-- <button id="change-chart">Change to Classic</button> -->
+                <br><br>
+                <div id="chart_div" style="width: 1250px; height: 500px;"></div>
                 </body>
 
                 </html>
