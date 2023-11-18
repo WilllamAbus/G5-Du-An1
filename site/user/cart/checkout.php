@@ -23,8 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!isset($errhoten) && !isset($errsdt) && !isset($errdc)) {
         $conn = pdo_get_connection();
         $conn->beginTransaction();
-        // $sqlInsertHoaDon = "INSERT INTO hoa_don (ten_nd, sdt,  dia_chi,ngay_lay pttt, tong_tien) VALUES (?, ?, ?, ?, ?,?)";
-        // $stmtInsertHoaDon = $conn->prepare($sqlInsertHoaDon);
+
         $ma_nd = $_COOKIE['ma_nd'];
         $ten_nd = $_POST['ten_nd'];
         $sdt = $_POST['sdt'];
@@ -32,18 +31,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $dia_chi = $_POST['dia_chi'];
         $pttt = $_POST['pttt'];
         $tong_tien = $_POST['tong_tien'];
-        // $stmtInsertHoaDon->execute([$ten_nd, $sdt,  $dia_chi, $ngay_lap, $pttt, $tong_tien]);
+
 
         order_data($ma_nd, $ten_nd, $dia_chi, $sdt, $ngay_lap, $pttt, $tong_tien);
 
-        // $ma_hd = $conn->lastInsertId();
 
-        // Call the function to insert data into hoa_don_chi_tiet using $ma_hd
-       
-        // $sqlInsertHoaDonChiTiet = "INSERT INTO hoa_don_chi_tiet (ma_hd, ma_hh, don_gia, so_luong, giam_gia, thanh_tien) VALUES (?, ?, ?, ?, ?, ?)";
-        // $stmtInsertHoaDonChiTiet = $conn->prepare($sqlInsertHoaDonChiTiet);
         $ma_hd = $_POST['ma_hd'];
         $ma_hh = $_POST['ma_hh'];
+        $ten_hh = $_POST['ten_hh'];
         $don_gia = $_POST['don_gia'];
         $so_luong = $_POST['so_luong'];
         $giam_gia = $_POST['giam_gia'];
@@ -51,15 +46,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $hinh = $_POST['hinh'];
 
 
-        // $stmtInsertHoaDonChiTiet->execute([$ma_hd, $ma_hh, $don_gia, $so_luong, $giam_gia, $thanh_tien]);
-        // order_detail_data($ma_hd, $ma_hh, $don_gia, $so_luong, $giam_gia, $thanh_tien, $hinh);
+        order_detail_data($ma_hd, $ma_hh, $ten_hh, $don_gia, $so_luong, $giam_gia, $thanh_tien, $hinh);
 
-        // $conn->commit();
-        // $ma_hd = $conn->lastInsertId(PDO::FETCH_ASSOC);
-        order_detail_data($ma_hd, $ma_hh, $don_gia, $so_luong, $giam_gia, $thanh_tien, $hinh);
-     
         echo "<script>alert('Đặt hàng thành công!');</script>";
-        echo "<script>window.location.href = 'index.php?page=orderComplete'</script>";
+        echo "<script>window.location.href = 'index.php?page=process'</script>";
         // header('Location: index.php?page=orderComplete');
     }
 
@@ -119,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                   <img  src="../controller/hinh/' . $cart[3] . '"alt="" style="width: 78px; height: 126px">
                   <small class="text-muted">Số lượng:' . $cart[4] . '</small>
                 </div>
-                <span class="text-muted">' . number_format($cart[2],) . ' VNĐ</span>
+                <span class="text-muted">' . number_format($cart[2], ) . ' VNĐ</span>
                 <span class="text-muted">' . $cart[5] . ' %</span>
                 <a href="index.php?page=xoacart&idcart=' . $i . '">  Xóa
                     </a>
@@ -136,7 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 </div>
                 <span class="text-success">
-                        <?= number_format($ship,) ?> VNĐ
+                        <?= number_format($ship, ) ?> VNĐ
                     </span>
             </li>
             <li class="list-group-item d-flex justify-content-between">
@@ -206,8 +196,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 <div class="mb-3">
 
-                    <input type="hidden" name="tong_tien" class="form-control" value=<?= $tongthanhtoan ?>
-                    >
+                    <input type="hidden" name="tong_tien" class="form-control" value=<?= $tongthanhtoan ?>>
 
                 </div>
 
@@ -245,17 +234,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input id="credit" name="ma_hd" type="hidden" class="custom-control-input"
                        value=" <?= $stam['ma_hd'] ?>">
                 <input id="credit" name="ma_hh" type="hidden" class="custom-control-input" value="<?= $cart[0] ?>">
-                <input id="credit" name="don_gia" type="hidden" class="custom-control-input" value="<?= $cart[2] ?>">
+                <input id="credit" name="ten_hh" type="hidden" class="custom-control-input" value="<?= $cart[1] ?>">
+                <input id="credit" name="don_gia" type="hidden" class="custom-control-input"
+                       value="<?= $cart[2] ?>">
                 <input id="credit" name="so_luong" type="hidden" class="custom-control-input" value=<?= $cart[4] ?>>
-                <input id="credit" name="giam_gia" type="hidden" class="custom-control-input" value="<?= $cart[5] ?>">
+                <input id="credit" name="giam_gia" type="hidden" class="custom-control-input"
+                       value="<?= $cart[5] ?>">
                 <input id="credit" name="thanh_tien" type="hidden" class="custom-control-input"
                        value=<?= $tongthanhtoan ?>>
                 <input id="credit" name="hinh" type="hidden" class="custom-control-input" value="<?= $cart[3] ?>">
 
                 <hr class="mb-4">
-                <button type="submit" class="btn btn-primary btn-lg btn-block"
-                        style="background-color: #FBEE2C; color: #132A1E;">Thanh Toán
-                </button>
+                <form class="" method="POST" target="_blank" enctype="application/x-www-form-urlencoded"
+                      action="">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block"
+                            style="background-color: #FBEE2C; color: #132A1E;">Hoàn thành thanh toán
+                    </button>
+                </form>
+
 
             </form>
         </div>

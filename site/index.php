@@ -93,19 +93,9 @@ if (isset($_GET["page"])) {
 
             break;
         case 'checkout':
-            // function generateMaHD()
-            // {
-            //     return 'HD_' . uniqid();
-            // }
 
-            // Function to sanitize input data
-            // function sanitizeInput($data)
-            // {
-            //     return htmlspecialchars(strip_tags(trim($data)));
-            // }
- 
-     
-            include 'user/cart/checkout.php';
+
+        include 'user/cart/checkout.php';
             break;
         case 'orderComplete':
             include 'user/cart/orderComplete.php';
@@ -128,6 +118,10 @@ if (isset($_GET["page"])) {
             break;
         case 'logout':
             include 'logOut.php';
+            break;
+        case 'process':
+            include 'user/cart/processMoMo.php';
+            break;
         case 'signup':
             include './account/signup.php';
             break;

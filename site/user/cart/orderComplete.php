@@ -24,7 +24,10 @@
     <div class="py-5 text-center">
         <h2>CẢM ƠN QUÝ KHÁCH</h2>
     </div>
+    <form class="" method="POST" target="_blank" enctype="application/x-www-form-urlencoded"
+          action="user/cart/processMoMo.php">
 
+    </form>
     <div class="row">
         <div class="col-lg-12 order-md-2 mb-4">
             <?
@@ -88,7 +91,7 @@
 
                     <a href="index.php?page=trangchu">
                         <button type="submit" class="btn  btn-lg btn-block"
-                                style="background-color: #FBEE2C; color: #132A1E;">TIẾP TỤC MUA SẮM
+                                style="background-color: #FBEE2C; color: #132A1E;">Trở về trang chủ
                         </button>
                     </a>
                 </div>
