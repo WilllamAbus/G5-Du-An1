@@ -77,12 +77,12 @@ function get()
     return $kq;
 }
 
-function khach_hang_insert($ma_kh, $ten_kh, $email, $sdt, $dia_chi, $ngay_sinh, $mat_khau, $hinh, $vai_tro, $kich_hoat)
+function khach_hang_insert($ma_nd, $ma_hh, $thanh_tien, $so_luong, $don_gia, $giam_gia, $hinh, $ten_hh, $ma_cthd, $ma_nv)
 {
 
-    $sql = "insert into khach_hang(ma_kh, ten_kh, email,  sdt , dia_chi , ngay_sinh ,mat_khau, hinh, vai_tro, kich_hoat) 
+    $sql = "insert into khach_hang(ma_nd, ma_hh, thanh_tien, so_luong, don_gia, giam_gia, hinh, ten_hh, ma_cthd, ma_nv) 
     values(?,?,?,?,?,?,?,?,?,?)";
-    pdo_execute($sql, $ma_kh, $ten_kh, $email, $sdt, $dia_chi, $ngay_sinh, $mat_khau, $hinh, $vai_tro, $kich_hoat);
+    pdo_execute($sql, $ma_nd, $ma_hh, $thanh_tien, $so_luong, $don_gia, $giam_gia, $hinh, $ten_hh, $ma_cthd, $ma_nv);
 }
 
 function khachhang_update($ma_kh, $ten_kh, $email, $sdt, $dia_chi, $ngay_sinh, $mat_khau, $hinh, $vai_tro, $kich_hoat)
@@ -115,4 +115,27 @@ function loadall_khachhang()
     $sql = "select * from khach_hang order by ma_kh desc";
     $listKhachHang = pdo_query($sql);
     return $listKhachHang;
+}
+
+
+function ma_hdctLoad()
+{
+    $sql = "SELECT hdct.ma_cthd from hoa_don_chi_tiet hdct ";
+    $stament = pdo_query($sql);
+    return $stament;
+}
+
+function ma_ndLoad()
+{
+    $sql = "SELECT nd.ma_nd from nguoi_dung nd";
+    $stm = pdo_query($sql);
+    return $stm;
+}
+
+function ma_nvLoad()
+{
+
+    $sql = "SELECT nv.ma_nv from nhan_vien nv";
+    $nvStm = pdo_query($sql);
+    return $nvStm;
 }
