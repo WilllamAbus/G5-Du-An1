@@ -13,7 +13,7 @@ include_once '../dao/user.php';
 
 if (isset($_COOKIE['user_admin'])) {
 
-    setcookie('user_admin', time() - 3600);
+    // setcookie('user_admin', time() - 3600);
     unset($_COOKIE['user_admin']);
 }
 
@@ -21,6 +21,7 @@ if (isset($_COOKIE['user_admin'])) {
 function nextPage()
 {
     echo "<script>window.location.href = '../signIn.php'</script>";
+    unset($_COOKIE['user_admin']);
 }
 
 nextPage();

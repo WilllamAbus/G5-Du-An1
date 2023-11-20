@@ -30,10 +30,10 @@
 
 <body>
 <!-- <style>
-    .picture {
-        width: 200px;
-        height: 300px;
-    }
+.picture {
+    width: 200px;
+    height: 300px;
+}
 </style> -->
 
 <section class="content">
@@ -55,15 +55,15 @@
                             <thead>
                             <tr>
                                 <th>Mã Khách Hàng</th>
-                                <th>Tên Khách Hàng</th>
-                                <th>Email</th>
-                                <th>Số Điện thoại</th>
-                                <th>Địa Chỉ</th>
-                                <th>Ngày Sinh</th>
+                                <th>Hàng hóa</th>
+                                <th>Số lượng</th>
+                                <th>Giảm giá</th>
+                                <th>Đơn giá</th>
+                                <th>Thành tiền</th>
+
 
                                 <th>Hình ảnh</th>
-                                <th>Vai trò</th>
-                                <th>Kich Hoạt</th>
+
 
                                 <th colspan="2">Chức năng</th>
 
@@ -76,25 +76,22 @@
 
                             foreach ($listKhachHang as $result) {
                                 extract($result);
-                                $suakh = "index.php?page=suakh&ma_kh=" . $ma_kh;
+
                                 $xoakh = "index.php?page=xoakh&ma_kh=" . $ma_kh;
                                 echo ' 
                       
                       <tr>
                       <td>' . $ma_kh . '</td>    
-                      <td>' . $ten_kh . ' </td>  
-                      <td>' . $email . ' </td>
-                      <td> ' . $sdt . '</td>   
-                      <td> ' . $dia_chi . '</td> 
-                      <td> ' . $ngay_sinh . ' </td>
+                      <td>' . $ten_hh . ' </td>  
+                      <td>' . $so_luong . ' </td>
+                      <td> ' . $giam_gia . '</td>   
+                      <td> ' . number_format($don_gia) . '</td> 
+                      <td> ' . number_format($thanh_tien) . ' </td>
                      
-                      <td> <img src="../controller/hinh/users/' . $hinh . '" width = "50px">  </td>
-                      <td>  ' . $vai_tro . ' </td>             
-                      <td>  ' . $kich_hoat . ' </td>  
+                      <td> <img src="../controller/hinh/' . $hinh . '" width = "50px">  </td>
+                    
 
-                      <td>
-                          <a href="' . $suakh . '"><input class="btn btn-primary" type="button" value="Sửa"></a>
-                      </td>
+                     
                       <td> 
                           <a href="' . $xoakh . '" ><input class="btn btn-primary" type="button" value="Xóa"></a>               
                       </td>
@@ -229,4 +226,3 @@
 </body>
 
 </html>
-

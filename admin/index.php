@@ -80,6 +80,7 @@ include_once "../dao/phan-hoi-binh-luan.php  ";
                             break;
 
                         case "addProduct":
+                            check_login();
                             if (exist_param('themMoi')) {
 
                                 $ten_hh = $_POST['ten_hh'];
@@ -289,82 +290,7 @@ include_once "../dao/phan-hoi-binh-luan.php  ";
                         case "customer":
 
 
-                            if (exist_param('themMoi')) {
-                                $ma_kh = $_POST['ma_kh'];
-                                $ten_kh = $_POST['ten_kh'];
-                                $email = $_POST['email'];
-                                $dia_chi = $_POST['dia_chi'];
-                                $ngay_sinh = $_POST['ngay_sinh'];
-                                $mat_khau = $_POST['mat_khau'];
-                                $kich_hoat = $_POST['kich_hoat'];
-                                $sđt = $_POST['sdt'];
-                                $vai_tro = $_POST['vai_tro'];
-                                $hinh = $_FILES['hinh']['name'];
-                                $target_dir = "../controller/hinh/users/";
-                                $target_file = $target_dir . basename($_FILES["hinh"]["name"]);
-                                $conn = pdo_get_connection();
-
-
-                                if (move_uploaded_file($_FILES["hinh"]["tmp_name"], $target_file)) {
-                                    echo "The file  has been uploaded.";
-                                } else {
-                                    echo "Sorry, there was an error uploading your file.";
-                                }
-
-                                $errors = array();
-
-                                if (empty($ten_kh)) {
-                                    $errors['ten_kh'] = 'Tên khách hàng không được để trống';
-                                } elseif (strlen($ten_kh) < 8) {
-                                    $errors['ten_kh'] = 'Tên khách hàng phải có độ dài tối thiểu là 8 ký tự';
-                                }
-
-                                if (empty($mat_khau)) {
-                                    $errors['mat_khau'] = 'Mật khẩu không được để trống';
-                                } elseif (strlen($mat_khau) < 8) {
-                                    $errors['mat_khau'] = 'Mật khẩu phải có độ dài tối thiểu là 8 ký tự';
-                                } elseif (!preg_match('/[A-Z]/', $mat_khau) && !preg_match('/[a-z]/', $mat_khau) && !preg_match('/\[@\#</span>%^&*()_+|~=`{}:"<>?,.]/', $mat_khau)) {
-                                    $errors['mat_khau'] = 'Mật khẩu phải chứa ít nhất một ký tự in hoa, một ký tự in thường, một ký tự số và một ký tự đặc biệt';
-                                }
-
-                                if (empty($email)) {
-                                    $errors['email'] = 'Email không được để trống';
-                                } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                                    $errors['email'] = 'Email không đúng định dạng';
-                                }
-
-                                if (empty($sđt)) {
-                                    $errors['sđt'] = 'Số điện thoại không được để trống';
-                                }
-
-
-                                if (empty($ngay_sinh)) {
-                                    $errors['ngay_sinh'] = 'Ngày sinh không được để trống';
-                                }
-
-                                if (count($errors) > 0) {
-                                    $thongbao = implode('<br>', $errors);
-                                } else {
-                                    khach_hang_insert(
-                                        $ma_kh,
-                                        $ten_kh,
-                                        $email,
-                                        $sđt,
-                                        $dia_chi,
-                                        $ngay_sinh,
-                                        $mat_khau,
-                                        $hinh,
-                                        $vai_tro,
-                                        $kich_hoat
-                                    );
-                                    $thongbao = "Thêm thành công";
-                                }
-
-                                //   //     // $sql="insert into khach_hang(ma_kh, ten_kh, email,  sdt , dia_chi , ngay_sinh ,mat_khau, hinh, vai_tro, kich_hoat)
-                                //   //     // values(:ma_kh,:ten_kh,:email,:sđt,?,?,?,?,?,?)";
-
-                            }
-                            include("khachHang/customer.php");
+                        include("khachHang/customer.php");
                             break;
                         case 'xoakh':
 

@@ -1,3 +1,29 @@
+<?php
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $ma_hh = $_POST['ma_hh'];
+    $ten_hh = $_POST['ten_hh'];
+    $don_gia = $_POST['don_gia'];
+    $so_luong = $_POST['so_luong'];
+    $giam_gia = $_POST['giam_gia'];
+    $thanh_tien = $_POST['thanh_tien'];
+    $hinh = $_POST['hinh'];
+    $ma_cthd = $_POST['ma_cthd'];
+    $ma_nv = $_POST['ma_nv'];
+    $ma_nd = $_POST['ma_nd'];
+
+
+    khach_hang_insert($ma_nd, $ma_hh, $thanh_tien, $so_luong, $don_gia, $giam_gia, $hinh, $ten_hh, $ma_cthd, $ma_nv);
+    echo "<script>alert('Thêm thành công!');</script>";
+
+    //   //     // $sql="insert into khach_hang(ma_kh, ten_kh, email,  sdt , dia_chi , ngay_sinh ,mat_khau, hinh, vai_tro, kich_hoat)
+    //   //     // values(:ma_kh,:ten_kh,:email,:sđt,?,?,?,?,?,?)";
+
+}
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -47,86 +73,75 @@
 
     </div>
 
+    <?php
+
+    $tong = 0;
+    $i = 0;
+    $ship = 30000;
+    $tongthanhtoan = 0;
+    $tongsl = 0;
+    $giam_gia = 1;
+    foreach ($_SESSION['mycart'] as $cart) {
+        $thanhtien = $giam_gia > 0 ? ($cart[2] * $cart[4]) * (100 - $cart[5]) / 100 : $cart[2] * $cart[4];
+        $tong = $tong + $thanhtien;
+        $tongthanhtoan = $ship + $tong;
+    };
+    ?>
+
     <form action="index.php?page=customer" method="post" enctype="multipart/form-data">
         <div class="card-body">
             <div class="form-group">
-                <label for="">Mã Khách Hàng</label>
-                <p style="color: red;">
-                    <? echo !empty($errors['ma_kh']) ? $errors['ma_kh'] : ''; ?>
-                </p>
-                <input class="form-control" type="text" name="ma_kh">
-            </div>
-            <div class="form-group">
-                <label for="">Mật Khẩu</label>
-                <p style="color: red;">
-                    <? echo !empty($errors['mat_khau']) ? $errors['mat_khau'] : ''; ?>
-                </p>
-                <input class="form-control" type="text" name="mat_khau">
-            </div>
-            <div class="form-group">
-                <label for="">Tên Khách Hàng</label>
-                <p style="color: red;">
-                    <? echo !empty($errors['ten_kh']) ? $errors['ten_kh'] : ''; ?>
-                </p>
-                <input class="form-control" type="text" name="ten_kh">
-            </div>
-            <div class="form-group">
-                <label for="">Email Khách Hàng</label>
-                <p style="color: red;">
-                    <? echo !empty($errors['email']) ? $errors['email'] : ''; ?>
-                </p>
-                <input class="form-control" type="email" name="email">
-            </div>
+                <label for="">Mã Khách Hàng
 
-            <div class="form-group">
-                <label for="">Ngày Sinh</label>
-                <p style="color: red;">
-                    <? echo !empty($errors['ngay_sinh']) ? $errors['ngay_sinh'] : ''; ?>
-                </p>
-                <input class="form-control" type="date" name="ngay_sinh">
-            </div>
-            <div class="form-group">
-                <label for="">Địa Chỉ</label>
-                <p style="color: red;">
-                    <? echo !empty($errors['dia_chi']) ? $errors['dia_chi'] : ''; ?>
-                </p>
-                <input class="form-control" type="text" name="dia_chi">
-            </div>
-            <div class="form-group">
-                <label for="">Số Điện Thoại</label>
-                <p style="color: red;">
-                    <? echo !empty($errors['sdt']) ? $errors['sdt'] : ''; ?>
-                </p>
-                <input class="form-control" type="number" name="sdt">
-            </div>
+                </label>
 
-            <div class="form-group">
-                <label for="">Vai trò</label>
-                <div class="form-special">
-                    <input type="radio" name="vai_tro" value="0"> Khách hàng
-                    <input type="radio" name="vai_tro" value="1" checked> Nhân Viên
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="">Kích hoạt</label>
-                <div class="form-special">
-                    <input type="radio" name="kich_hoat" value="0"> Vô hiệu hóa
-                    <input type="radio" name="kich_hoat" value="1" checked> Kích hoạt
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="">Hình ảnh</label>
-                <p style="color: red;">
-                    <? echo !empty($errors['hinh']) ? $errors['hinh'] : ''; ?>
-                </p>
-                <input class="form-control" type="file" name="hinh" placeholder="">
+                <input class="form-control" type="text" name="ma_kh" disabled>
             </div>
             <?php
             if (isset($thongbao) && ($thongbao != ""))
                 echo $thongbao;
             ?>
-        </div>
 
+        </div>
+        <?
+        $mahdctLoad = ma_hdctLoad();
+        foreach ($mahdctLoad as $mahdct) {
+            extract($mahdct);
+        }
+        ?>
+
+        <?
+        $mandLoad = ma_ndLoad();
+        foreach ($mandLoad as $mand) {
+            extract($mand);
+        }
+        ?>
+        <?
+        $manvLoad = ma_nvLoad();
+        foreach ($manvLoad as $manv) {
+            extract($manv);
+        }
+        ?>
+        <div class="card-body">
+            <input id="credit" name="ma_nv" type="hidden" class="custom-control-input"
+                   value=" <?= $manv['ma_nv'] ?>">
+            <input id="credit" name="ma_nd" type="hidden" class="custom-control-input"
+                   value=" <?= $mand['ma_nd'] ?>">
+            <input id="credit" name="ma_cthd" type="hidden" class="custom-control-input"
+                   value=" <?= $mahdct['ma_cthd'] ?>">
+            <input id="credit" name="ma_hh" type="hidden" class="custom-control-input" value="<?= $cart[0] ?>">
+            <input id="credit" name="ten_hh" type="hidden" class="custom-control-input" value="<?= $cart[1] ?>">
+            <input id="credit" name="don_gia" type="hidden" class="custom-control-input"
+                   value="<?= $cart[2] ?>">
+            <input id="credit" name="so_luong" type="hidden" class="custom-control-input" value=<?= $cart[4] ?>>
+            <input id="credit" name="giam_gia" type="hidden" class="custom-control-input"
+                   value="<?= $cart[5] ?>">
+            <input id="credit" name="thanh_tien" type="hidden" class="custom-control-input"
+                   value=<?= $tongthanhtoan ?>>
+            <input id="credit" name="hinh" type="hidden" class="custom-control-input" value="<?= $cart[3] ?>">
+
+
+        </div>
 
         <!-- /.card-body -->
 
@@ -135,7 +150,6 @@
                 <input class="btn btn-outline-primary btn-md  " name="themMoi" value="Thêm mới"
                        type="submit"></input>
 
-                <input class="btn btn-outline-primary btn-md  " value="Nhập lại" type="reset"></input>
 
                 <a name="" id="" class="btn btn-outline-primary btn-md" href="index.php?page=dsKhachHang"
                    role="button">Danh sách</a>
