@@ -112,7 +112,10 @@ function khach_hang_delete($ma_kh)
 
 function loadall_khachhang()
 {
-    $sql = "select * from khach_hang order by ma_kh desc";
+    $LIMIT = 3;
+    $num = isset($_GET['page_num']) ? intval($_GET['page_num']) : 1;
+    $offset = ($num - 1) * $LIMIT;
+    $sql = "select * from khach_hang order by ma_kh desc limit $offset, $LIMIT";
     $listKhachHang = pdo_query($sql);
     return $listKhachHang;
 }
@@ -120,14 +123,14 @@ function loadall_khachhang()
 
 function ma_hdctLoad()
 {
-    $sql = "SELECT hdct.ma_cthd from hoa_don_chi_tiet hdct ";
+    $sql = "SELECT hdct.* from hoa_don_chi_tiet hdct WHERE hdct.ma_cthd  ORDER BY hdct.ma_cthd  ASC ";
     $stament = pdo_query($sql);
     return $stament;
 }
 
 function ma_ndLoad()
 {
-    $sql = "SELECT nd.ma_nd from nguoi_dung nd";
+    $sql = "SELECT nd.* from nguoi_dung nd WHERE nd.ma_nd  ORDER BY nd.ma_nd ASC";
     $stm = pdo_query($sql);
     return $stm;
 }
@@ -135,7 +138,7 @@ function ma_ndLoad()
 function ma_nvLoad()
 {
 
-    $sql = "SELECT nv.ma_nv from nhan_vien nv";
+    $sql = "SELECT nv.* from nhan_vien nv WHERE nv.ma_nv REGEXP '^NV\\d{4}$' ORDER BY nv.ma_nv ASC";
     $nvStm = pdo_query($sql);
     return $nvStm;
 }
