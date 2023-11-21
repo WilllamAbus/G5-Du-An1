@@ -66,16 +66,17 @@ function order_data($ma_nd, $ten_nd, $dia_chi, $sdt, $ngay_lap, $pttt, $tong_tie
   
 }
 
-function order_detail_data($ma_hd, $ma_hh, $don_gia, $so_luong, $giam_gia, $thanh_tien, $hinh)
+function order_detail_data($ma_hd, $ma_hh, $ten_hh, $don_gia, $so_luong, $giam_gia, $thanh_tien, $hinh)
 {
     $conn = pdo_get_connection();
     $thanh_tien = str_replace(',', '', $thanh_tien);
-    $sql = "INSERT INTO hoa_don_chi_tiet(ma_hd,ma_hh,don_gia,so_luong,giam_gia,thanh_tien,hinh ) " .
-        " VALUES(:ma_hd,:ma_hh,:don_gia,:so_luong,:giam_gia,:thanh_tien, :hinh)";
+    $sql = "INSERT INTO hoa_don_chi_tiet(ma_hd,ma_hh,ten_hh,don_gia,so_luong,giam_gia,thanh_tien,hinh ) " .
+        " VALUES(:ma_hd,:ma_hh,:ten_hh, :don_gia,:so_luong,:giam_gia,:thanh_tien, :hinh)";
     $statement = $conn->prepare($sql);
 
     $statement->bindParam(":ma_hd", $ma_hd);
     $statement->bindParam(":ma_hh", $ma_hh);
+    $statement->bindParam(":ten_hh", $ten_hh);
     $statement->bindParam(":don_gia", $don_gia);
     $statement->bindParam(":so_luong", $so_luong);
     $statement->bindParam(":giam_gia", $giam_gia);
@@ -93,7 +94,7 @@ function update_order_customer($ma_hd, $ten_kh, $dia_chi, $sdt)
 
 function ma_hdLoad()
 {
-    $sql = "SELECT hd.ma_hd from hoa_don hd where hd.ma_hd >0";
+    $sql = "SELECT hd.ma_hd from hoa_don hd where hd.ma_hd ";
     $stament = pdo_query($sql);
     return $stament;
 }
