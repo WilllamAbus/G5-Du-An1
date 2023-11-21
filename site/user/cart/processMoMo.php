@@ -14,7 +14,6 @@ function execPostRequest($url, $data)
     );
     curl_setopt($ch, CURLOPT_TIMEOUT, 5);
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-    //disable SSL certificate verification
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
     //execute post
     $result = curl_exec($ch);
@@ -22,10 +21,14 @@ function execPostRequest($url, $data)
     if (curl_errno($ch)) {
         echo 'Curl error: ' . curl_error($ch);
     }
+
+    //execute post
+    $result = curl_exec($ch);
     //close connection
     curl_close($ch);
     return $result;
 }
+
 
 $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
 
@@ -53,7 +56,7 @@ if (empty($_POST)) {
     // $extraData = $_POST["extraData"];
 
     $requestId = time() . "";
-    $requestType = "captureWallet";
+    $requestType = "payWithATM";
     // $extraData = ($_POST["extraData"] ? $_POST["extraData"] : "");
     //before sign HMAC SHA256 signature
     $rawHash = "accessKey=" . $accessKey . "&amount=" . $amount . "&extraData=" . $extraData . "&ipnUrl=" . $ipnUrl . "&orderId=" . $orderId . "&orderInfo=" . $orderInfo . "&partnerCode=" . $partnerCode . "&redirectUrl=" . $redirectUrl . "&requestId=" . $requestId . "&requestType=" . $requestType;
@@ -72,7 +75,6 @@ if (empty($_POST)) {
         'requestType' => $requestType,
         'signature' => $signature);
     $result = execPostRequest($endpoint, json_encode($data));
-    var_dump($result);
     $jsonResult = json_decode($result, true);  // decode json
 
     //Just a example, please check more in there

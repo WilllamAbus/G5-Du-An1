@@ -29,7 +29,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $sdt = $_POST['sdt'];
         $ngay_lap = date_create()->format('Y-m-d H:i:s');
         $dia_chi = $_POST['dia_chi'];
-        $pttt = $_POST['pttt'];
+        if (isset($_POST['cash'])) {
+            $pttt = $_POST['cash'];
+            echo "<script>alert('Đặt hàng thành công!');</script>";
+            echo "<script>window.location.href = 'index.php?page=orderComplete'</script>";
+        }
+        if (!isset($_POST['cash'])) {
+            $pttt = $_POST['momo'];
+            echo "<script>alert('Đặt hàng thành công!');</script>";
+            echo "<script>window.location.href = 'index.php?page=process'</script>";
+        }
+
         $tong_tien = $_POST['tong_tien'];
 
 
@@ -48,8 +58,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         order_detail_data($ma_hd, $ma_hh, $ten_hh, $don_gia, $so_luong, $giam_gia, $thanh_tien, $hinh);
 
-        echo "<script>alert('Đặt hàng thành công!');</script>";
-        echo "<script>window.location.href = 'index.php?page=process'</script>";
+
+        // echo "<script>window.location.href = 'index.php?page=process'</script>";
+      
         // header('Location: index.php?page=orderComplete');
     }
 
@@ -206,11 +217,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <div class="d-block my-3">
                     <div class="custom-control custom-radio">
-                        <input id="credit" name="pttt" type="radio" class="custom-control-input" value="0">
+                        <input id="credit" name="cash" type="radio" class="custom-control-input" value="1">
                         <label class="custom-control-label" for="credit">Thanh toán bằng tiền mặt</label>
                     </div>
                     <div class="custom-control custom-radio">
-                        <input id="debit" name="pttt" type="radio" class="custom-control-input" value="1" checked>
+                        <input id="debit" name="momo" type="radio" class="custom-control-input" value="2">
                         <label class="custom-control-label" for="debit">Thanh toán bằng MoMo</label>
                     </div>
 
