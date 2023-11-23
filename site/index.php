@@ -22,6 +22,7 @@ $hh = loadall_sanpham("", 0);
 if (isset($_GET["page"])) {
     switch ($_GET["page"]) {
         case 'trangchu':
+            $dshh = load_hang_hoa_gia_tien();
             include 'user/view/home.php';
             break;
         case 'sanpham':
@@ -34,8 +35,9 @@ if (isset($_GET["page"])) {
                 $ma_loai = $_GET['maloai'];
             } else {
                 $ma_loai = 0;
-
             }
+
+
             $hh = loadall_sanpham($inputProduct, $ma_loai);
 
             // $product = san_pham_select_trend();
@@ -103,17 +105,62 @@ if (isset($_GET["page"])) {
             // {
             //     return htmlspecialchars(strip_tags(trim($data)));
             // }
- 
-     
+
+
             include 'user/cart/checkout.php';
             break;
         case 'orderComplete':
+       
             include 'user/cart/orderComplete.php';
             break;
+        case 'checkorder':
+            include 'user/cart/checkorder.php';
+            break;
         case 'sanphamct':
-
-
             include 'user/product/productdetail.php';
+            break;
+        case 'giathap':
+            if (isset($_POST['inputProduct']) && ($_POST['inputProduct'])) {
+                $inputProduct = $_POST['inputProduct'];
+            } else {
+                $inputProduct = " ";
+            }
+            if (isset($_GET['maloai']) && ($_GET['maloai'] > 0)) {
+                $ma_loai = $_GET['maloai'];
+            } else {
+                $ma_loai = 0;
+
+            }
+            $spnew = load_hang_hoa_gia_thap_nhat($inputProduct = "", $ma_loai = 0);
+            include 'user/product/load-gia-thap.php';
+            break;
+        case 'giacao':
+            if (isset($_POST['inputProduct']) && ($_POST['inputProduct'])) {
+                $inputProduct = $_POST['inputProduct'];
+            } else {
+                $inputProduct = " ";
+            }
+            if (isset($_GET['maloai']) && ($_GET['maloai'] > 0)) {
+                $ma_loai = $_GET['maloai'];
+            } else {
+                $ma_loai = 0;
+            }
+            $spnew = load_hang_hoa_gia_cao_nhat($inputProduct = "", $ma_loai = 0);
+            include 'user/product/load-gia-cao.php';
+            break;
+        case 'xephang':
+            if (isset($_POST['inputProduct']) && ($_POST['inputProduct'])) {
+                $inputProduct = $_POST['inputProduct'];
+            } else {
+                $inputProduct = " ";
+            }
+            if (isset($_GET['maloai']) && ($_GET['maloai'] > 0)) {
+                $ma_loai = $_GET['maloai'];
+            } else {
+                $ma_loai = 0;
+            }
+            $spnew = load_hang_hoa_xep_hang($inputProduct = "", $ma_loai = 0);
+            include 'user/product/load-gia-cao.php';
             break;
         case 'danhmuc':
             $listdanhmuc = loadall_danhmuc();
@@ -139,6 +186,7 @@ if (isset($_GET["page"])) {
             break;
 
         default:
+        
             include 'user/view/home.php';
             break;
     }

@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (isset($user) && (is_array($user) && (count($user)) > 0)) {
             extract($user);
-            setcookie('ma_nd', $user['ten_nd'], $time() + 10800, "/");
+            setcookie('ma_nd', $user['ten_nd'], time() + 10800, "/");
 
 
             echo "<script>window.location.href = 'index.php?page=trangchu'</script>";

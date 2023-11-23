@@ -1,4 +1,3 @@
-
 <div class="container-fluid">
     <div class="row px-xl-5">
         <!-- Shop Sidebar Start -->

@@ -6,6 +6,7 @@
         $ma_hh = $_GET['ma_hh'];
 
         $product = san_pham_select_by_id($ma_hh);
+        hang_hoa_tang_so_luot_xem($ma_hh);
         if (($product) == true) {
 
             extract($product);

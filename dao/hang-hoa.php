@@ -68,8 +68,12 @@ function hang_hoa_delete($ma_hh)
 
 function hang_hoa_select_all()
 {
-    $sql = "SELECT * FROM hang_hoa";
-    return pdo_query($sql);
+    $LIMIT = 2;
+    $num = isset($_GET['page_num']) ? intval($_GET['page_num']) : 1;
+    $offset = ($num - 1) * $LIMIT;
+    $sql = "SELECT * FROM hoa_don ORDER BY ma_hd LIMIT $offset , $LIMIT";
+    $result = pdo_query($sql);
+    return $result;
 }
 
 function hang_hoa_select_by_id($ma_hh)
@@ -167,7 +171,7 @@ function insert_sanpham($ten_hh, $don_gia, $giam_gia, $hinh, $mo_ta, $ngay_nhap,
 }
 
 
-function loadall_sanpham($inputProduct = "", $ma_loai = 0)
+function loadall_sanpham($inputProduct = "", $ma_loai = 0  )
 {
     $LIMIT = 3;
     $num = isset($_GET['page_num']) ? intval($_GET['page_num']) : 1;
@@ -183,7 +187,54 @@ function loadall_sanpham($inputProduct = "", $ma_loai = 0)
     $listProduct = pdo_query($sql);
     return $listProduct;
 }
-
+function load_hang_hoa_gia_thap_nhat($inputProduct = "", $ma_loai = 0 )
+{
+    $LIMIT = 3;
+    $num = isset($_GET['page_num']) ? intval($_GET['page_num']) : 1;
+    $offset = ($num - 1) * $LIMIT;
+    $sql = "select * from hang_hoa where 1";
+    if ($inputProduct != "") {
+        $sql .= " and ten_hh like '%" . $inputProduct . "%'";
+    }
+    if ($ma_loai > 0) {
+        $sql .= " and ma_loai ='" . $ma_loai . "'";
+    }
+    $sql .= " order by don_gia asc limit $offset, $LIMIT";
+    $listProduct = pdo_query($sql);
+    return $listProduct;
+}
+function load_hang_hoa_gia_cao_nhat($inputProduct = "", $ma_loai = 0 )
+{
+    $LIMIT = 3;
+    $num = isset($_GET['page_num']) ? intval($_GET['page_num']) : 1;
+    $offset = ($num - 1) * $LIMIT;
+    $sql = "select * from hang_hoa where 1";
+    if ($inputProduct != "") {
+        $sql .= " and ten_hh like '%" . $inputProduct . "%'";
+    }
+    if ($ma_loai > 0) {
+        $sql .= " and ma_loai ='" . $ma_loai . "'";
+    }
+    $sql .= " order by don_gia desc limit $offset, $LIMIT";
+    $listProduct = pdo_query($sql);
+    return $listProduct;
+}
+function load_hang_hoa_xep_hang($inputProduct = "", $ma_loai = 0 )
+{
+    $LIMIT = 3;
+    $num = isset($_GET['page_num']) ? intval($_GET['page_num']) : 1;
+    $offset = ($num - 1) * $LIMIT;
+    $sql = "select * from hang_hoa where 1";
+    if ($inputProduct != "") {
+        $sql .= " and ten_hh like '%" . $inputProduct . "%'";
+    }
+    if ($ma_loai > 0) {
+        $sql .= " and ma_loai ='" . $ma_loai . "'";
+    }
+    $sql .= " order by so_luot_xem desc limit $offset, $LIMIT";
+    $listProduct = pdo_query($sql);
+    return $listProduct;
+}
 
 function san_pham_select_keyword($inputProduct)
 {
@@ -240,4 +291,16 @@ function san_pham_select_by_id($ma_hh)
 {
     $sql = "SELECT * FROM hang_hoa WHERE ma_hh=?";
     return pdo_query_one($sql, $ma_hh);
+}
+function load_hang_hoa_gia_tien()
+{
+    $sql = "select * from hang_hoa order by don_gia asc";
+    $dshh = pdo_query($sql);
+    return $dshh;
+}
+function load_hang_hoa_moi_nhat()
+{
+    $sql = "select * from hang_hoa order by ma_hh desc";
+    $dshh = pdo_query($sql);
+    return $dshh;
 }

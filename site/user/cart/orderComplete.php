@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 
@@ -28,46 +29,47 @@
     <div class="row">
         <div class="col-lg-12 order-md-2 mb-4">
             <?
-            $tong = 0;
-            $i = 0;
-            $ship = 30000;
-            $tongthanhtoan = 0;
-            $tongsl = 0;
-            $giam_gia = 1;
+   $tong = 0;
+   $i = 0;
+   $ship = 30000;
+   $tongthanhtoan = 0;
+   $tongsl = 0;
+   $giam_gia = 1;
             foreach ($_SESSION['mycart'] as $cart) {
+
                 $thanhtien = $giam_gia > 0 ? ($cart[2] * $cart[4]) * (100 - $cart[5]) / 100 : $cart[2] * $cart[4];
                 $tong = $tong + $thanhtien;
                 $tongthanhtoan = $ship + $tong;
                 $tongsl += $cart[4];
-                $i += 1;
+           
+            
                 echo ' 
                         <h4 class="d-flex justify-content-between align-items-center mb-3">
                         <span class="text-muted">SẢN PHẨM CỦA BẠN</span>
                         <span class="badge badge-secondary badge-pill">Tổng số lượng sản phẩm
-                             ' . $tongsl . '
+                             '.$tongsl.'
                         </span>
                     </h4>
     
                     <ul class="list-group mb-3">
                        <li class="list-group-item d-flex justify-content-between lh-condensed">
                             <div>
-                                <h6 class="my-0">Tên sản phẩm ' . $i . ': ' . $cart[1] . '</h6>
+                                <h6 class="my-0">Tên sản phẩm ' . $cart[1] . '</h6>
                                 <img  src="../controller/hinh/' . $cart[3] . '"alt="" style="width: 78px; height: 126px">
-                                <small class="text-muted">Số lượng: ' . $cart[4] . '</small>
+                                <small class="text-muted">Số lượng:  ' . $cart[4] . '</small>
                             </div>
-                            <span class="text-muted">' . number_format($cart[2],) . ' VNĐ</span>
+                            <span class="text-muted">' . number_format($cart[2]) . ' VNĐ</span>
                         </li>';
 
+
+          
             }
-
-
             ?>
             <li class="list-group-item d-flex justify-content-between bg-light">
                 <div class="text-success">
                     <h6 class="my-0">Giảm giá</h6>
-                    <small>Mã giảm giá</small>
                 </div>
-                <span class="text-success">0</span>
+                <span class="text-success"><?= number_format( $cart[5], ) ?>%</span>
             </li>
             <li class="list-group-item d-flex justify-content-between bg-light">
                 <div class="text-success">
@@ -81,13 +83,12 @@
             <li class="list-group-item d-flex justify-content-between">
                 <span>Tổng tiền</span>
                 <strong>
-                    <?= number_format($tongthanhtoan,) ?> VNĐ
+                <?= number_format($tongthanhtoan) ?> VNĐ
                 </strong>
             </li>
             </ul>
             <div class=" p-2">
                 <div class="form-group">
-
                     <a href="index.php?page=trangchu">
                         <button type="submit" class="btn  btn-lg btn-block"
                                 style="background-color: #FBEE2C; color: #132A1E;">TIẾP TỤC MUA SẮM
@@ -143,3 +144,6 @@
 </body>
 
 </html>
+<?
+unset($_SESSION['mycart']);
+?>
