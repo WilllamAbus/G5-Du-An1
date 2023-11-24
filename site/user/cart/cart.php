@@ -70,7 +70,11 @@
                     </div>
                 </div>
             </form>
-            <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Tổng Giỏ Hàng</span>
+            <div class="  text-right">
+            <p class="m-3"><a href="index.php?page=myorder" style="text-decoration: none; color: black;">Kiểm Tra Đơn Hàng</a></p>
+
+        </div>
+            <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-8">Tổng Giỏ Hàng</span>
             </h5>
             <div class="bg-light p-30 mb-5">
                 <div class="border-bottom pb-2">
@@ -96,7 +100,9 @@
                     }
                     ?>
                 </div>
+                
             </div>
+            
         </div>
     </div>
 </div>

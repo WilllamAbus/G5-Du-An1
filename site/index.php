@@ -1,6 +1,7 @@
 <?php
 session_start();
 ob_start();
+
 include 'user/components/stylesshet.php';
 include 'user/components/header.php';
 require_once '../common/global.php';
@@ -93,16 +94,30 @@ if (isset($_GET["page"])) {
 
             break;
         case 'checkout':
-
-
-        include 'user/cart/checkout.php';
+            include 'user/cart/checkout.php';
             break;
+        case 'myorder':
+            include 'user/cart/myorder.php';
+            break;
+            case 'huyhd':
+                if (isset($_GET['ma_hd'])) {
+                    $ma_hd = $_GET['ma_hd'];
+                        don_hang_delete($ma_hd);
+                }
+                $dshd = don_hang_select_all();
+                include 'user/cart/myorder.php';
+                break;
+            case 'myorderDetail':
+                if (isset($_GET['ma_hd'])) {
+                    $ma_hd = $_GET['ma_hd'];
+                    $dshd = chi_tiet_don_hang($ma_hd);
+                    include 'user/cart/myorderDetail.php';
+                }
+                break;
         case 'orderComplete':
             include 'user/cart/orderComplete.php';
             break;
         case 'sanphamct':
-
-
             include 'user/product/productdetail.php';
             break;
         case 'danhmuc':
