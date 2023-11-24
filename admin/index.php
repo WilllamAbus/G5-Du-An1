@@ -12,6 +12,7 @@ include_once("../dao/hang-hoa.php");
 include_once("../dao/khach-hang.php");
 include_once "../dao/thong-ke.php";
 include_once "../dao/nhan_vien.php";
+include_once "../dao/cart.php";
 include_once "../dao/phan-hoi-binh-luan.php  ";
 
 
@@ -593,6 +594,52 @@ include_once "../dao/phan-hoi-binh-luan.php  ";
 
                             include "binhLuan/list.php";
                             break;
+                            case "donhang":
+                                $dshd = don_hang_select_all();
+                                include("donHang/order.php");
+                                break;
+                            case "chitietdonhang":
+                                if (isset($_GET["ma_hd"])) {
+                                    $dshd = chi_tiet_don_hang($ma_hd);
+                                    include("donHang/orderDetail.php");
+                                }
+                                break;
+                            case "xoahd":
+                                if (isset($_GET['ma_hd'])) {
+                                    try {
+                                        don_hang_delete($ma_hd);
+                                        $MESSAGE = "Xóa thành công!";
+                                    } catch (Exception $exc) {
+                                        $MESSAGE = "Xóa thất bại!";
+                                    }
+                                }
+                                $dshd = don_hang_select_all();
+                                include("donHang/order.php");
+                                break;
+                            case "trangthai1":
+                                if (isset($_GET['ma_hd']) && ($_GET['ma_hd'] > 0)) {
+
+                                    don_hang_update_total_dang_dong_goi($ma_hd);
+                                    echo '<script>
+                                            alert ("Cập Nhật Thành Công");
+                                            </script>';
+                                }
+
+                                $dshd = don_hang_select_all();
+                                include("donHang/order.php");
+                                break;
+                            case "trangthai2":
+                                if (isset($_GET['ma_hd']) && ($_GET['ma_hd'] > 0)) {
+
+                                    don_hang_update_total_dang_giao_hang($ma_hd);
+                                    echo '<script>
+                                                alert ("Cập Nhật Thành Công");
+                                                </script>';
+                                }
+
+                                $dshd = don_hang_select_all();
+                                include("donHang/order.php");
+                                break;
                         case "logout":
                             include("logout.php");
                             break;

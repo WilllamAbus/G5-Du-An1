@@ -9,7 +9,11 @@ function chi_tiet_don_hang($ma_hd)
 
 function don_hang_select_all()
 {
-    $sql = "SELECT * FROM hoa_don dh ORDER BY ngay_lap DESC";
+    $LIMIT = 2;
+    $num = isset($_GET['page_num']) ? intval($_GET['page_num']) : 1;
+    $offset = ($num - 1) * $LIMIT; 
+
+    $sql = "SELECT * FROM hoa_don dh ORDER BY ngay_lap DESC LIMIT $offset , $LIMIT";
     return pdo_query($sql);
 }
 
@@ -19,10 +23,10 @@ function don_hang_delete($ma_hd)
     pdo_execute($sql, $ma_hd);
 }
 
-function don_hang_update_total_dang_dong_goi($ma_hd, $ma_nv)
+function don_hang_update_total_dang_dong_goi($ma_hd)
 {
-    $sql = "UPDATE hoa_don SET tinh_trang = 1, ma_nv =? WHERE ma_hd = ?";
-    pdo_execute($sql, $ma_nv, $ma_hd);
+    $sql = "UPDATE hoa_don SET tinh_trang = 1 WHERE ma_hd = ?";
+    pdo_execute($sql, $ma_hd);
 }
 
 function don_hang_update_total_dang_giao_hang($ma_hd)
