@@ -176,7 +176,7 @@ function load_hang_hoa_gia_0_100000($loc1 = "",$loc2 = "",$loc3 = "",$loc4 = "",
     if($loc5 !="" ){
         $sql .= " and don_gia  > 700000  ";
     }
-
+  
     $listProduct = pdo_query($sql);
     return $listProduct;
 }
