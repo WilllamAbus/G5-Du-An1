@@ -107,7 +107,85 @@ function hang_hoa_select_by_loai($ma_loai)
     $sql = "SELECT * FROM hang_hoa WHERE ma_loai=?";
     return pdo_query($sql, $ma_loai);
 }
+function load_hang_hoa_gia_thap_nhat($inputProduct = "", $ma_loai = 0 )
+{
+    $LIMIT = 3;
+    $num = isset($_GET['page_num']) ? intval($_GET['page_num']) : 1;
+    $offset = ($num - 1) * $LIMIT;
+    $sql = "select * from hang_hoa where 1";
+    if ($inputProduct != "") {
+        $sql .= " and ten_hh like '%" . $inputProduct . "%'";
+    }
+    if ($ma_loai > 0) {
+        $sql .= " and ma_loai ='" . $ma_loai . "'";
+    }
+    $sql .= " order by don_gia asc limit $offset, $LIMIT";
+    $listProduct = pdo_query($sql);
+    return $listProduct;
+}
+function load_hang_hoa_gia_cao_nhat($inputProduct = "", $ma_loai = 0 )
+{
+    $LIMIT = 3;
+    $num = isset($_GET['page_num']) ? intval($_GET['page_num']) : 1;
+    $offset = ($num - 1) * $LIMIT;
+    $sql = "select * from hang_hoa where 1";
+    if ($inputProduct != "") {
+        $sql .= " and ten_hh like '%" . $inputProduct . "%'";
+    }
+    if ($ma_loai > 0) {
+        $sql .= " and ma_loai ='" . $ma_loai . "'";
+    }
+    $sql .= " order by don_gia desc limit $offset, $LIMIT";
+    $listProduct = pdo_query($sql);
+    return $listProduct;
+}
+function load_hang_hoa_xep_hang($inputProduct = "", $ma_loai = 0 )
+{
+    $LIMIT = 3;
+    $num = isset($_GET['page_num']) ? intval($_GET['page_num']) : 1;
+    $offset = ($num - 1) * $LIMIT;
+    $sql = "select * from hang_hoa where 1";
+    if ($inputProduct != "") {
+        $sql .= " and ten_hh like '%" . $inputProduct . "%'";
+    }
+    if ($ma_loai > 0) {
+        $sql .= " and ma_loai ='" . $ma_loai . "'";
+    }
+    $sql .= " order by so_luot_xem desc limit $offset, $LIMIT";
+    $listProduct = pdo_query($sql);
+    return $listProduct;
+}
+function load_hang_hoa_gia_0_100000($loc1 = "",$loc2 = "",$loc3 = "",$loc4 = "",$loc5 = "" )
+{ 
+    $LIMIT = 3;
+    $num = isset($_GET['page_num']) ? intval($_GET['page_num']) : 1;
+    $offset = ($num - 1) * $LIMIT;
+    $sql = " select * from hang_hoa where 1 ";
+    if($loc1 !="" ){
+        $sql .= " and don_gia  BETWEEN 0 AND 100000 ";
+    }
+    if($loc2 !="" ){
+        $sql .= " and don_gia  BETWEEN 100000 AND 300000 ";
+    }
+    if($loc3 !="" ){
+        $sql .= " and don_gia  BETWEEN 300000 AND 500000 ";
+    }
+    if($loc4 !="" ){
+        $sql .= " and don_gia  BETWEEN 500000 AND 700000 ";
+    }
+    if($loc5 !="" ){
+        $sql .= " and don_gia  > 700000  ";
+    }
 
+    $listProduct = pdo_query($sql);
+    return $listProduct;
+}
+function load_hang_hoa_gia_10000_300000()
+{
+    $sql = " select * from hang_hoa where don_gia  BETWEEN 10000 AND 300000";   
+    $listProduct = pdo_query($sql);
+    return $listProduct;
+}
 function hang_hoa_select_keyword($keyword)
 {
     $sql = "SELECT * FROM hang_hoa hh "
