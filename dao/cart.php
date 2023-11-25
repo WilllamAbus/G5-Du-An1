@@ -16,6 +16,13 @@ function don_hang_select_all()
     $sql = "SELECT * FROM hoa_don dh ORDER BY ngay_lap DESC LIMIT $offset , $LIMIT";
     return pdo_query($sql);
 }
+function my_don_hang_select_all($ma_nd)
+{ $LIMIT = 2;
+    $num = isset($_GET['page_num']) ? intval($_GET['page_num']) : 1;
+    $offset = ($num - 1) * $LIMIT; 
+    $sql = "SELECT * FROM hoa_don WHERE ma_nd=? LIMIT $offset , $LIMIT";
+    return pdo_query($sql, $ma_nd);
+}
 
 function don_hang_delete($ma_hd)
 {

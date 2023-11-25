@@ -41,7 +41,7 @@
                 $thanhtien = $giam_gia > 0 ? ($cart[2] * $cart[4]) * (100 - $cart[5]) / 100 : $cart[2] * $cart[4];
                 $tong = $tong + $thanhtien;
                 $tongthanhtoan = $ship + $tong;
-
+                $tongsl += $cart[4];
                 $i += 1;
                 echo ' 
                         <h4 class="d-flex justify-content-between align-items-center mb-3">
@@ -66,17 +66,23 @@
             <li class="list-group-item d-flex justify-content-between bg-light">
                 <div class="text-success">
                     <h6 class="my-0">Giảm giá</h6>
-                    <small>Mã giảm giá</small>
                 </div>
-                <span class="text-success">0</span>
+                <span class="text-success"><?=$cart[5] ?>%</span>
             </li>
             <li class="list-group-item d-flex justify-content-between bg-light">
                 <div class="text-success">
                     <h6 class="my-0">Tiền Ship</h6>
-
                 </div>
                 <span class="text-success">
                             <?= number_format($ship,) ?> VNĐ
+                        </span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between bg-light">
+                <div class="text-success">
+                    <h6 class="my-0">Tổng số lượng sản phẩm</h6>
+                </div>
+                <span >  
+                    <?= $tongsl ?>
                         </span>
             </li>
             <li class="list-group-item d-flex justify-content-between">
@@ -144,3 +150,6 @@
 </body>
 
 </html>
+<?
+unset($_SESSION['mycart']);
+?>
