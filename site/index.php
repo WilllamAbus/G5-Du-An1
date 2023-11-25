@@ -93,6 +93,49 @@ if (isset($_GET["page"])) {
             include 'user/cart/cart.php';
 
             break;
+            case 'giathap':
+                if (isset($_POST['inputProduct']) && ($_POST['inputProduct'])) {
+                    $inputProduct = $_POST['inputProduct'];
+                } else {
+                    $inputProduct = " ";
+                }
+                if (isset($_GET['maloai']) && ($_GET['maloai'] > 0)) {
+                    $ma_loai = $_GET['maloai'];
+                } else {
+                    $ma_loai = 0;
+    
+                }
+                $spnew = load_hang_hoa_gia_thap_nhat($inputProduct = "", $ma_loai = 0);
+                include 'user/product/load-gia-thap.php';
+                break;
+            case 'giacao':
+                if (isset($_POST['inputProduct']) && ($_POST['inputProduct'])) {
+                    $inputProduct = $_POST['inputProduct'];
+                } else {
+                    $inputProduct = " ";
+                }
+                if (isset($_GET['maloai']) && ($_GET['maloai'] > 0)) {
+                    $ma_loai = $_GET['maloai'];
+                } else {
+                    $ma_loai = 0;
+                }
+                $spnew = load_hang_hoa_gia_cao_nhat($inputProduct = "", $ma_loai = 0);
+                include 'user/product/load-gia-cao.php';
+                break;
+            case 'xephang':
+                if (isset($_POST['inputProduct']) && ($_POST['inputProduct'])) {
+                    $inputProduct = $_POST['inputProduct'];
+                } else {
+                    $inputProduct = " ";
+                }
+                if (isset($_GET['maloai']) && ($_GET['maloai'] > 0)) {
+                    $ma_loai = $_GET['maloai'];
+                } else {
+                    $ma_loai = 0;
+                }
+                $spnew = load_hang_hoa_xep_hang($inputProduct = "", $ma_loai = 0);
+                include 'user/product/load-gia-cao.php';
+                break;
             case 'theogia':
                 if(isset($_POST['loc1']) && $_POST['loc1'] ){
                     $loc1 = $_POST['loc1'];
