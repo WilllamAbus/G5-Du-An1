@@ -1,15 +1,5 @@
-<?
-// if ($_COOKIE() =='') session_start();
-// if (isset($_COOKIE['ma_nd']) == false){
-//     header('locatione: login.php');
-//     exit();
-// }
 
-// if(isset($_COOKIE['ma_nd'])){
-// $ma_nd = $_COOKIE['ma_nd'];
-// }
-// $ten_nd = $_SESSION['ten_nd'];
-// Lấy giá trị từ session
+<?php
 if (isset($_SESSION['ten_nd'])) {
     $ten_nd = $_SESSION['ten_nd'];
 }
@@ -18,58 +8,58 @@ $ma_nd = ($_COOKIE['ma_nd']);
 
 
 $loi = "";
-// print_r($_POST);
-print_r($_POST);
-if (isset($_POST['btndoimatkhau']) == true) {
-    if (isset($_POST['matkhaucu'])) {
-        $matkhaucu = $_POST['matkhaucu'];
+
+// Kiểm tra xem form đã được submit hay chưa
+if (isset($_POST['btndoimatkhau'])) {
+    // Lấy dữ liệu từ form
+    $matkhaucu = isset($_POST['matkhaucu']) ? $_POST['matkhaucu'] : "";
+    $matkhaumoi_1 = isset($_POST['matkhaumoi_1']) ? $_POST['matkhaumoi_1'] : "";
+    $matkhaumoi_2 = isset($_POST['matkhaumoi_2']) ? $_POST['matkhaumoi_2'] : "";
+
+    // Kiểm tra tính hợp lệ của mật khẩu cũ
+    if (empty($matkhaucu)) {
+        $loi .= "Mật khẩu cũ không được để trống<br>";
     }
 
-    if (isset($_POST['matkhaumoi_1'])) {
-        $matkhaumoi_1 = $_POST['matkhaumoi_1'];
+    // Kiểm tra tính hợp lệ của mật khẩu mới
+    if (empty($matkhaumoi_1)) {
+        $loi .= "Mật khẩu mới không được để trống<br>";
+    } elseif (strlen($matkhaumoi_1) < 8) {
+        $loi .= "Mật khẩu mới quá ngắn, tối thiểu 8 kí tự<br>";
     }
 
-    if (isset($_POST['matkhaumoi_2'])) {
-        $matkhaumoi_2 = $_POST['matkhaumoi_2'];
+    // Kiểm tra tính hợp lệ của mật khẩu xác nhận
+    if (empty($matkhaumoi_2)) {
+        $loi .= "Xác nhận mật khẩu mới không được để trống<br>";
+    } elseif ($matkhaumoi_1 !== $matkhaumoi_2) {
+        $loi .= "Mật khẩu mới không trùng khớp<br>";
     }
-    //  $conn = new PDO(
-    //         "mysql:host=localhost;dbname=bookstore_g5;charset=utf8",
-    //         "huytv_pc07617",
-    //         "192383T&"
-    //     );
 
-    //     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $conn = pdo_get_connection();
-    if ($conn) {
-        // $sql = "SELECT * FROM nguoi_dung WHERE ten_nd =? AND mat_khau =? ";
-        // $stmt = $conn->prepare($sql);
-        // $stmt->execute([$ma_nd, $matkhaucu]);
-       
-        $sql = "SELECT * FROM nguoi_dung WHERE ten_nd = ? AND mat_khau = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute([$ma_nd, $matkhaucu]);
-        if ($stmt->rowCount() == 0) { {
-                $loi .= "Mật khẩu bạn nhập vào không chính xác <br>";
-            }
-        }
-        if (strlen($matkhaumoi_1) < 7) { {
-                $loi .= "Mật khẩu ngắn quá, Tối thiểu 8 kí tự <br>";
-            }
-        }
-        if ($matkhaumoi_1 != $matkhaumoi_2) {
-            $loi .= "Mật khẩu mới không trùng nhau<br>";
-        }
-    }
+    // Nếu không có lỗi, thực hiện cập nhật mật khẩu
     if ($loi == "") {
-        // $sql = "UPDATE nguoi_dung SET ten_nd =? WHERE mat_khau =? ";
-        // $stmt = $conn->prepare($sql);
-        // $stmt->execute([$ma_nd, $matkhaumoi_1]);
-        if($stmt->rowCount() > 0){
-            $sql = "UPDATE nguoi_dung SET mat_khau = ? WHERE ten_nd = ?";
+        $conn = pdo_get_connection();
+        if ($conn) {
+            $sql = "SELECT * FROM nguoi_dung WHERE ten_nd = ? AND mat_khau = ?";
             $stmt = $conn->prepare($sql);
-            $stmt->execute([$matkhaumoi_1, $ma_nd]); 
-          }
-        echo "Đã cập nhật xong mật khẩu";
+            $stmt->execute([$ma_nd, $matkhaucu]);
+
+            if ($stmt->rowCount() == 0) {
+                $loi .= "Mật khẩu cũ không chính xác<br>";
+            } else {
+                // Cập nhật mật khẩu mới
+                $sql_update = "UPDATE nguoi_dung SET mat_khau = ? WHERE ten_nd = ?";
+                $stmt_update = $conn->prepare($sql_update);
+                $stmt_update->execute([$matkhaumoi_1, $ma_nd]);
+
+                if ($stmt_update->rowCount() > 0) {
+                    echo '<div class="alert alert-success" style="text-align: center">
+                            <strong></strong> Đã cập nhật xong !!!.
+                          </div>';
+                } else {
+                    $loi .= "Có lỗi xảy ra khi cập nhật mật khẩu mới<br>";
+                }
+            }
+        }
     }
 }
 ?>
