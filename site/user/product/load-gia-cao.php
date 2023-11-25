@@ -3,35 +3,35 @@
         <!-- Shop Sidebar Start -->
         <div class="col-lg-3 col-md-4">
             <!-- Price Start -->
-            <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Khoảng giá
-                </span></h5>
+            <h5 class="section-title position-relative text-uppercase mb-3"><span
+                        class="bg-secondary pr-3">Khoảng giá </span></h5>
             <div class="bg-light p-4 mb-30">
-                <form action="index.php?page=theogia" method="post">
+            <form action="index.php?page=theogia" method="post">
               
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" name="loc1" class="custom-control-input" id="price-1">
-                        <label class="custom-control-label" for="price-1">Dưới 100,000 VNĐ</label>
-                    </div>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" name="loc2" class="custom-control-input" id="price-2">
-                        <label class="custom-control-label" for="price-2">100,000 VNĐ - 300,000 VNĐ</label>
-                    </div>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" name="loc3" class="custom-control-input" id="price-3">
-                        <label class="custom-control-label" for="price-3">300,000 VNĐ - 500,000 VNĐ</label>
+              <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                  <input type="checkbox" name="loc1" class="custom-control-input" id="price-1">
+                  <label class="custom-control-label" for="price-1">Dưới 100,000 VNĐ</label>
+              </div>
+              <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                  <input type="checkbox" name="loc2" class="custom-control-input" id="price-2">
+                  <label class="custom-control-label" for="price-2">100,000 VNĐ - 300,000 VNĐ</label>
+              </div>
+              <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                  <input type="checkbox" name="loc3" class="custom-control-input" id="price-3">
+                  <label class="custom-control-label" for="price-3">300,000 VNĐ - 500,000 VNĐ</label>
 
-                    </div>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" name="loc4" class="custom-control-input" id="price-4">
-                        <label class="custom-control-label" for="price-4">500,000 VNĐ - 700,000 VNĐ</label>
+              </div>
+              <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                  <input type="checkbox" name="loc4" class="custom-control-input" id="price-4">
+                  <label class="custom-control-label" for="price-4">500,000 VNĐ - 700,000 VNĐ</label>
 
-                    </div>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-                        <input type="checkbox" name="loc5" class="custom-control-input" id="price-5">
-                        <label class="custom-control-label" for="price-5">Trên 700,000 VNĐ</label>
-                    </div><br>
-                    <input type="submit" name="loc" value="Lọc" class="btn btn-primary">
-                </form>
+              </div>
+              <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
+                  <input type="checkbox" name="loc5" class="custom-control-input" id="price-5">
+                  <label class="custom-control-label" for="price-5">Trên 700,000 VNĐ</label>
+              </div><br>
+              <input type="submit" name="loc" value="Lọc" class="btn btn-primary">
+          </form>
             </div>
             <!-- Price End -->
 
@@ -131,12 +131,12 @@
                         <div class="ml-2">
                             <div class="btn-group">
                                 <button type="button" class="btn btn-sm btn-light dropdown-toggle"
-                                    data-toggle="dropdown">Lọc
+                                        data-toggle="dropdown">Lọc
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="index.php?page=sanpham">Mới Nhất</a>
-                                    <a class="dropdown-item" href="index.php?page=giathap">Giá: Từ Thấp Đến Cao</a>
-                                    <a class="dropdown-item" href="index.php?page=giacao">Giá: Từ Cao Đến Thấp</a>
+                                <a class="dropdown-item" href="index.php?page=sanpham">Mới Nhất</a>
+                                <a class="dropdown-item" href="index.php?page=giathap">Giá: Từ Thấp Đến Cao</a>
+                                <a class="dropdown-item" href="index.php?page=giacao">Giá: Từ Cao Đến Thấp</a>
                                     <a class="dropdown-item" href="index.php?page=xephang">Xếp hạng tốt nhất</a>
                                 </div>
                             </div>
@@ -152,7 +152,7 @@
                     </div>
                 </div>
                 <?php
-                foreach ($hh as $sp) {
+                foreach ($spnew  as $sp) {
                     extract($sp);
                     $href = "chi-tiet-san-pham?ma_hh=$ma_hh";
                     $prodID = $sp['ma_hh'];
@@ -163,8 +163,8 @@
                         <form class="product-item bg-light mb-4">
                             <a href="index.php?page=sanphamct&ma_hh=<?= $ma_hh ?>">
                                 <div class="product-img position-relative overflow-hidden">
-                                    <img class="img-fluid w-70  picture mt-5 ml-lg-5" src="../controller/hinh/<?= $hinh ?>"
-                                        alt="">
+                                    <img class="img-fluid w-70  picture mt-5 ml-lg-5"
+                                         src="../controller/hinh/<?= $hinh ?>" alt="">
                                     <!-- <div class="product-action">
                                         <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
                                         <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
@@ -173,13 +173,9 @@
                                     </div> -->
                                 </div>
                                 <div class="text-center py-4">
-                                    <a class="h6 text-decoration-none text-truncate" href="">
-                                        <?= $ten_hh ?>
-                                    </a>
+                                    <a class="h6 text-decoration-none text-truncate" href=""><?= $ten_hh ?></a>
                                     <div class="d-flex align-items-center justify-content-center mt-2">
-                                        <h5>
-                                            <?= number_format($don_gia) ?>
-                                        </h5>
+                                        <h5><?= number_format($don_gia) ?></h5>
                                         <h6 class="text-muted ml-2">
                                             <del>500.000 đ</del>
                                         </h6>
@@ -190,9 +186,7 @@
                                         <small class="fa fa-star text-primary mr-1"></small>
                                         <small class="fa fa-star text-primary mr-1"></small>
                                         <small class="fa fa-star text-primary mr-1"></small>
-                                        <small>(
-                                            <?= $so_luot_xem ?>)
-                                        </small>
+                                        <small>(<?= $so_luot_xem ?>)</small>
                                     </div>
                                 </div>
                             </a>
@@ -202,8 +196,8 @@
                         <form class="product-item bg-light mb-4">
                             <a href="index.php?page=sanphamct&ma_hh=<?= $ma_hh ?>">
                                 <div class="product-img position-relative overflow-hidden">
-                                    <img class="img-fluid w-70  picture mt-5 ml-lg-5" src="../controller/hinh/<?= $hinh ?>"
-                                        alt="">
+                                    <img class="img-fluid w-70  picture mt-5 ml-lg-5"
+                                         src="../controller/hinh/<?= $hinh ?>" alt="">
                                     <!-- <div class="product-action">
                                         <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
                                         <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
@@ -212,13 +206,9 @@
                                     </div> -->
                                 </div>
                                 <div class="text-center py-4">
-                                    <a class="h6 text-decoration-none text-truncate" href="">
-                                        <?= $ten_hh ?>
-                                    </a>
+                                    <a class="h6 text-decoration-none text-truncate" href=""><?= $ten_hh ?></a>
                                     <div class="d-flex align-items-center justify-content-center mt-2">
-                                        <h5>
-                                            <?= number_format($don_gia) ?>
-                                        </h5>
+                                        <h5><?= number_format($don_gia) ?></h5>
                                         <h6 class="text-muted ml-2">
                                             <del>500.000 đ</del>
                                         </h6>
@@ -229,9 +219,7 @@
                                         <small class="fa fa-star text-primary mr-1"></small>
                                         <small class="fa fa-star text-primary mr-1"></small>
                                         <small class="fa fa-star text-primary mr-1"></small>
-                                        <small>(
-                                            <?= $so_luot_xem ?>)
-                                        </small>
+                                        <small>(<?= $so_luot_xem ?>)</small>
                                     </div>
                                 </div>
                             </a>
@@ -241,8 +229,8 @@
                         <form class="product-item bg-light mb-4">
                             <a href="index.php?page=sanphamct&ma_hh=<?= $ma_hh ?>">
                                 <div class="product-img position-relative overflow-hidden">
-                                    <img class="img-fluid w-70  picture mt-5 ml-lg-5" src="../controller/hinh/<?= $hinh ?>"
-                                        alt="">
+                                    <img class="img-fluid w-70  picture mt-5 ml-lg-5"
+                                         src="../controller/hinh/<?= $hinh ?>" alt="">
                                     <!-- <div class="product-action">
                                         <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
                                         <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
@@ -251,13 +239,9 @@
                                     </div> -->
                                 </div>
                                 <div class="text-center py-4">
-                                    <a class="h6 text-decoration-none text-truncate" href="">
-                                        <?= $ten_hh ?>
-                                    </a>
+                                    <a class="h6 text-decoration-none text-truncate" href=""><?= $ten_hh ?></a>
                                     <div class="d-flex align-items-center justify-content-center mt-2">
-                                        <h5>
-                                            <?= number_format($don_gia) ?>
-                                        </h5>
+                                        <h5><?= number_format($don_gia) ?></h5>
                                         <h6 class="text-muted ml-2">
                                             <del>500.000 đ</del>
                                         </h6>
@@ -268,9 +252,7 @@
                                         <small class="fa fa-star text-primary mr-1"></small>
                                         <small class="fa fa-star text-primary mr-1"></small>
                                         <small class="fa fa-star text-primary mr-1"></small>
-                                        <small>(
-                                            <?= $so_luot_xem ?>)
-                                        </small>
+                                        <small>(<?= $so_luot_xem ?>)</small>
                                     </div>
                                 </div>
                             </a>
@@ -412,39 +394,34 @@
                         </a>
                     </div> -->
                     <?php
-                }
-                ;
+                };
                 ?>
             </div>
             <div class="col-12">
                 <nav>
-                    <?php
-                    $LIMIT = 3;
-                    $num = isset($_GET['page_num']) ? intval($_GET['page_num']) : 1;
-                    $connect = pdo_get_connection();
-                    $sqlCount = "SELECT COUNT(*) as count FROM hang_hoa";
+                <ul class="pagination justify-content-center">
+                <?php
+                            $LIMIT = 3;
+                            $num = isset($_GET['page_num']) ? intval($_GET['page_num']) : 1;
+                            $connect = pdo_get_connection();
+                            $sqlCount = "SELECT COUNT(*) as count FROM hang_hoa";
 
-                    $count = $connect->query($sqlCount);
-                    $countRes = $count->fetch();
-                    $totalPages = ceil(($countRes['count'] / $LIMIT));
-                    echo '  <ul class="pagination justify-content-center">';
-                    for ($index = 1; $index <= $totalPages; $index++) {
-                        $active = ($num == $index) ? ' active' : '';
-                        echo '  <li class="page-item ' . $active . '">
-                                        <a class="page-link" href="index.php?page=sanpham&page_num=' . $index . '">' . $index . '</a>
-                                        </li>';
-                    }
+                            $count = $connect->query($sqlCount);
+                            $countRes = $count->fetch();
+                            $totalPages = ceil(($countRes['count'] / $LIMIT));
+                            echo '  <ul class="pagination justify-content-end p-3">';
+                            for ($index = 1; $index <= $totalPages; $index++) {
+                                $active = ($num == $index) ? ' active' : '';
+                                echo '  <li class="page-item ' . $active . '">
+                                              <a class="page-link" href="index.php?page=giacao&page_num=' . $index . '">' . $index . '</a>
+                                              </li>';
+                            }
 
-                    echo ' </ul>';
+                            echo ' </ul>';
 
-                    ?>
-                    <!-- <ul class="">
-                        <li class="page-item disabled"><a class="page-link" href="#">Đầu</span></a></li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">Tới</a></li>
-                    </ul> -->
+
+                            ?>
+                </ul>
                 </nav>
             </div>
         </div>
