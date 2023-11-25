@@ -93,6 +93,29 @@ if (isset($_GET["page"])) {
             include 'user/cart/cart.php';
 
             break;
+            case 'theogia':
+                if(isset($_POST['loc1']) && $_POST['loc1'] ){
+                    $loc1 = $_POST['loc1'];
+                    $hhtheogia = load_hang_hoa_gia_0_100000($loc1,$loc2 = "",$loc3 = "",$loc4 = "",$loc5 = "" );
+                }
+                if(isset($_POST['loc2']) && $_POST['loc2'] ){
+                    $loc2 = $_POST['loc2'];
+                    $hhtheogia = load_hang_hoa_gia_0_100000($loc1= "",$loc2 ,$loc3 = "",$loc4 = "",$loc5 = "" );
+                }
+                if(isset($_POST['loc3']) && $_POST['loc3'] ){
+                    $loc3 = $_POST['loc3'];
+                    $hhtheogia = load_hang_hoa_gia_0_100000($loc1= "",$loc2 = "",$loc3 ,$loc4 = "",$loc5 = "" );
+                }
+                if(isset($_POST['loc4']) && $_POST['loc4'] ){
+                    $loc4= $_POST['loc4'];
+                    $hhtheogia = load_hang_hoa_gia_0_100000($loc1= "",$loc2 = "",$loc3 = "",$loc4 ,$loc5 = "" );
+                }
+                if(isset($_POST['loc5']) && $_POST['loc5'] ){
+                    $loc5 = $_POST['loc5'];
+                    $hhtheogia = load_hang_hoa_gia_0_100000($loc1= "",$loc2 = "",$loc3 = "",$loc4 = "",$loc5  );
+                }
+                include 'user/product/load-theo-gia.php';
+                break;
         case 'checkout':
             include 'user/cart/checkout.php';
             break;
@@ -114,29 +137,7 @@ if (isset($_GET["page"])) {
                     include 'user/cart/myorderDetail.php';
                 }
                 break;
-                case 'theogia':
-                    if(isset($_POST['loc1']) && $_POST['loc1'] ){
-                        $loc1 = $_POST['loc1'];
-                        $hhtheogia = load_hang_hoa_gia_0_100000($loc1,$loc2 = "",$loc3 = "",$loc4 = "",$loc5 = "" );
-                    }
-                    if(isset($_POST['loc2']) && $_POST['loc2'] ){
-                        $loc2 = $_POST['loc2'];
-                        $hhtheogia = load_hang_hoa_gia_0_100000($loc1= "",$loc2 ,$loc3 = "",$loc4 = "",$loc5 = "" );
-                    }
-                    if(isset($_POST['loc3']) && $_POST['loc3'] ){
-                        $loc3 = $_POST['loc3'];
-                        $hhtheogia = load_hang_hoa_gia_0_100000($loc1= "",$loc2 = "",$loc3 ,$loc4 = "",$loc5 = "" );
-                    }
-                    if(isset($_POST['loc4']) && $_POST['loc4'] ){
-                        $loc4= $_POST['loc4'];
-                        $hhtheogia = load_hang_hoa_gia_0_100000($loc1= "",$loc2 = "",$loc3 = "",$loc4 ,$loc5 = "" );
-                    }
-                    if(isset($_POST['loc5']) && $_POST['loc5'] ){
-                        $loc5 = $_POST['loc5'];
-                        $hhtheogia = load_hang_hoa_gia_0_100000($loc1= "",$loc2 = "",$loc3 = "",$loc4 = "",$loc5  );
-                    }
-                    include 'user/product/load-theo-gia.php';
-                    break;
+             
         case 'orderComplete':
             include 'user/cart/orderComplete.php';
             break;
